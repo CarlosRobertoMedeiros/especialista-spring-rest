@@ -9,6 +9,7 @@ import com.example.algafoodapi.notificacao.NotificadorEmail;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/*
 @Configuration
 public class NotificacaoConfig {
 
@@ -19,4 +20,7 @@ public class NotificacaoConfig {
 
         return notificadorEmail;
     }
+
 }
+*/
+

@@ -6,19 +6,24 @@ package com.example.algafoodapi.service;/*
 
 import com.example.algafoodapi.modelo.Cliente;
 import com.example.algafoodapi.notificacao.Notificador;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+
+@Component
 public class AtivacaoClienteService {
 
-    private Notificador notificador;
-
-    public AtivacaoClienteService(Notificador notificador) {
-        this.notificador = notificador;
-        System.out.println("Ativação Cliente Service "+this+" notificadorEmail "+notificador);
-    }
+    @Autowired
+    private List<Notificador> notificadores;
 
     public void ativar(Cliente cliente){
         cliente.ativar();
-        notificador.notificarEmail(cliente, "Seu Cadastro No sistema Está Ativo");
 
+        for (Notificador notificador:notificadores){
+            //Deveria ter mudado para notificar
+            notificador.notificarEmail(cliente,"Seu Cadastro no Sistema está Ativo !!!");
+        }
     }
 }

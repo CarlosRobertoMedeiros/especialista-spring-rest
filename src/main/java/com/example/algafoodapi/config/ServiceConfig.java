@@ -10,6 +10,7 @@ import com.example.algafoodapi.service.AtivacaoClienteService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/*
 @Configuration
 public class ServiceConfig {
 
@@ -18,3 +19,5 @@ public class ServiceConfig {
         return  new AtivacaoClienteService(notificador);
     }
 }
+
+ */
