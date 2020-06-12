@@ -6,9 +6,7 @@ package com.example.algafoodapi.service;/*
 
 import com.example.algafoodapi.modelo.Cliente;
 import com.example.algafoodapi.notificacao.Notificador;
-import org.springframework.stereotype.Component;
 
-@Component
 public class AtivacaoClienteService {
 
     private Notificador notificador;

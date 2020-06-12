@@ -14,7 +14,6 @@ public class NotificadorEmail implements Notificador {
 
     public NotificadorEmail(String hostServidorSmtp){
         this.hostServidorSmtp = hostServidorSmtp;
-        System.out.println("NotificadorEmail"+this);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.example.algafoodapi.config;
 /*
- *  @criado em: 12/06/2020 - {06:52}
+ *  @criado em: 12/06/2020 - {12:23}
  *  @projeto  : algafood-api
  *  @autor    : roberto
  */
@@ -10,14 +10,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AlgaConfig {
+public class NotificacaoConfig {
 
     @Bean
     public NotificadorEmail notificadorEmail(){
         NotificadorEmail notificadorEmail = new NotificadorEmail("smtp.algamailcom.br");
-        notificadorEmail.setCaixaAlta(true);
+        notificadorEmail.setCaixaAlta(false);
 
         return notificadorEmail;
     }
-
 }
