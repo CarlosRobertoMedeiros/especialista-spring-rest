@@ -1,6 +1,6 @@
 package com.example.algafoodapi.notificacao;
 /*
- *  @criado em: 12/06/2020 - {05:27}
+ *  @criado em: 14/06/2020 - {11:06}
  *  @projeto  : algafood-api
  *  @autor    : roberto
  */
@@ -9,18 +9,18 @@ import com.example.algafoodapi.modelo.Cliente;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-@Profile("prod")
+@Profile("dev")
 @TipoDoNotificador(NivelUrgencia.URGENTE)
 @Component
-public class NotificadorEmail implements Notificador {
+public class NotificadorEmailMock implements Notificador {
 
-    public NotificadorEmail() {
-        System.out.println("Notificador Email Real");
+    public NotificadorEmailMock() {
+        System.out.println("Notificador Email Mock ");
     }
 
     @Override
     public void notificarEmail(Cliente cliente, String mensagem) {
-        System.out.printf("Notificando %s através da mensagem: %s\n",
-                           cliente.getNome(),cliente.getEmail());
+        System.out.printf("MOCK: Notificação seria enviada para: %s através da mensagem: %s\n",
+                cliente.getNome(),cliente.getEmail());
     }
 }
