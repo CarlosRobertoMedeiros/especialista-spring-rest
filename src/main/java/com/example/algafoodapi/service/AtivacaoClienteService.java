@@ -36,7 +36,7 @@ public class AtivacaoClienteService{
     }
 
     public void ativar(Cliente cliente){
-        cliente.ativar();
+        cliente.ativar ();
 
          notificador.notificarEmail(cliente,"Seu Cadastro no Sistema está Ativo !!!");
 
