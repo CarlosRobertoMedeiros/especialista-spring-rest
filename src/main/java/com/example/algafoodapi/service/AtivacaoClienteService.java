@@ -12,6 +12,7 @@ import com.example.algafoodapi.notificacao.TipoDoNotificador;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -21,24 +22,13 @@ import java.util.List;
 @Component
 public class AtivacaoClienteService{
 
-    @TipoDoNotificador(NivelUrgencia.URGENTE)
     @Autowired
-    private Notificador notificador;
-
-    @PostConstruct
-    public void init(){
-        System.out.println("Init" + notificador );
-    }
-
-    @PreDestroy
-    public void destroy(){
-        System.out.println("Destroy");
-    }
+    private ApplicationEventPublisher eventPublisher;
 
     public void ativar(Cliente cliente){
         cliente.ativar ();
-
-         notificador.notificarEmail(cliente,"Seu Cadastro no Sistema está Ativo !!!");
-
+        //Vai disparar um evento para o sistema
+        //Qualquer Classe que quiser vai poder consumir o ouvinte
+        eventPublisher.publishEvent(new ClienteAtivadoEvent(cliente));
     }
 }
