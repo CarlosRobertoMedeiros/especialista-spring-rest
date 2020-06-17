@@ -1,4 +1,12 @@
-notificador:
-  email:
-    host-servidor: smtp.dev.com.br
-    porta-servidor: 22
+#Configurações do Banco de Dados
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost:3306/app?createDatabaseIfNotExist=true&serverTimeZone=UTC
+    username: root
+    password: root
+
+#Criação automática das tabelas
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
