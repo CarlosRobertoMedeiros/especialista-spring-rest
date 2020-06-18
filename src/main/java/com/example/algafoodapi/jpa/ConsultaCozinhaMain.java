@@ -7,6 +7,7 @@ package com.example.algafoodapi.jpa;
 
 import com.example.algafoodapi.AlgafoodApiApplication;
 import com.example.algafoodapi.dominio.modelo.Cozinha;
+import com.example.algafoodapi.dominio.repository.CozinhaRepository;
 import org.springframework.context.ApplicationContext;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -22,11 +23,11 @@ public class ConsultaCozinhaMain {
                 .web(WebApplicationType.NONE)
                 .run(args);
 
-        CadastroCozinha cadastroCozinha = applicationContext.getBean(CadastroCozinha.class);
+        CozinhaRepository cozinhas = applicationContext.getBean(CozinhaRepository.class);
 
         //Listando
-        List<Cozinha> cozinhas = cadastroCozinha.listar();
-        for(Cozinha cozinha : cozinhas){
+        List<Cozinha> todasCozinhas = cozinhas.listar();
+        for(Cozinha cozinha : todasCozinhas){
             System.out.println(cozinha.getNome());
         }
 
@@ -37,23 +38,26 @@ public class ConsultaCozinhaMain {
         Cozinha cozinha2 = new Cozinha();
         cozinha2.setNome("Japonesa");
 
-        cozinha1 = cadastroCozinha.adicionar(cozinha1);
-        cozinha2 = cadastroCozinha.adicionar(cozinha2);
+        cozinha1 = cozinhas.salvar(cozinha1);
+        cozinha2 = cozinhas.salvar(cozinha2);
         System.out.printf("%d - %s\n",cozinha1.getId(),cozinha1.getNome());
         System.out.printf("%d - %s\n",cozinha2.getId(),cozinha2.getNome());
 
         //Consulta Por Id
-        Cozinha cozinha3 = cadastroCozinha.buscar(2L);
+        Cozinha cozinha3 = cozinhas.buscar(2L);
         System.out.printf("%d - %s\n",cozinha3.getId(),cozinha3.getNome());
 
         //Alterar Dados
         Cozinha cozinha4 = new Cozinha();
         cozinha4.setId(1L);
         cozinha4.setNome("Brasileira");
-        cozinha4 = cadastroCozinha.adicionar(cozinha4);
+        cozinha4 = cozinhas.salvar(cozinha4);
         System.out.printf("%d - %s\n",cozinha4.getId(),cozinha4.getNome());
 
-
+        //Remover Dados
+        Cozinha cozinha5 = new Cozinha();
+        cozinha5.setId(1L);
+        cozinhas.remover(cozinha5);
 
 
     }
