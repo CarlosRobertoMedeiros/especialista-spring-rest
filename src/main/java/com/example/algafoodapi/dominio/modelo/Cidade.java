@@ -1,6 +1,6 @@
 package com.example.algafoodapi.dominio.modelo;
 /*
- *  @criado em: 16/06/2020 - {20:17}
+ *  @criado em: 19/06/2020 - {13:06}
  *  @projeto  : algafood-api
  *  @autor    : roberto
  */
@@ -10,11 +10,12 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
+
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "tb_cozinha", schema = "app")
-public class Cozinha {
+@Table(name = "tb_cidade", schema = "app")
+public class Cidade {
 
     @EqualsAndHashCode.Include
     @Id
@@ -23,4 +24,9 @@ public class Cozinha {
 
     @Column(nullable = false)
     private String nome;
+
+    @ManyToOne
+    @JoinColumn(name = "id_estado", nullable = false)
+    private Estado estado;
+
 }

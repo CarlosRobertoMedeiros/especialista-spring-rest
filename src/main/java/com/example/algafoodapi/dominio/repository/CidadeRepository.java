@@ -5,15 +5,15 @@ package com.example.algafoodapi.dominio.repository;
  *  @autor    : roberto
  */
 
+import com.example.algafoodapi.dominio.modelo.Cidade;
 import com.example.algafoodapi.dominio.modelo.Restaurante;
 
 import java.util.List;
 
-public interface RestauranteRepository {
+public interface CidadeRepository {
 
-    List<Restaurante> listar();
-    Restaurante buscar(Long id);
-    Restaurante salvar(Restaurante restaurante);
-    void remover(Restaurante restaurante);
-
+    List<Cidade> listar();
+    Cidade buscar(Long id);
+    Cidade salvar(Cidade cidade);
+    void remover(Cidade cidade);
 }

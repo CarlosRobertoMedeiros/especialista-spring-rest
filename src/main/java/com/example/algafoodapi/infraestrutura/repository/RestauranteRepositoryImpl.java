@@ -6,12 +6,14 @@ package com.example.algafoodapi.infraestrutura.repository;/*
 
 import com.example.algafoodapi.dominio.modelo.Restaurante;
 import com.example.algafoodapi.dominio.repository.RestauranteRepository;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+@Component
 public class RestauranteRepositoryImpl implements RestauranteRepository {
 
     @PersistenceContext

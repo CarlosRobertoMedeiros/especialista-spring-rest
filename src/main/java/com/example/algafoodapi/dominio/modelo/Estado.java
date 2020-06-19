@@ -1,6 +1,6 @@
 package com.example.algafoodapi.dominio.modelo;
 /*
- *  @criado em: 16/06/2020 - {20:17}
+ *  @criado em: 19/06/2020 - {13:04}
  *  @projeto  : algafood-api
  *  @autor    : roberto
  */
@@ -13,8 +13,8 @@ import javax.persistence.*;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "tb_cozinha", schema = "app")
-public class Cozinha {
+@Table(name = "tb_estado", schema = "app")
+public class Estado {
 
     @EqualsAndHashCode.Include
     @Id
