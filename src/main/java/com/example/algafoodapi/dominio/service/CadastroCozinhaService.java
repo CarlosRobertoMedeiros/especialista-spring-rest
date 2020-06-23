@@ -5,9 +5,13 @@ package com.example.algafoodapi.dominio.service;
  *  @autor    : roberto
  */
 
+import com.example.algafoodapi.dominio.exception.EntidadeEmUsoException;
+import com.example.algafoodapi.dominio.exception.EntidadeNaoEncontradaException;
 import com.example.algafoodapi.dominio.modelo.Cozinha;
 import com.example.algafoodapi.dominio.repository.CozinhaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,8 +21,21 @@ public class CadastroCozinhaService {
     private CozinhaRepository cozinhaRepository;
 
     public Cozinha salvar(Cozinha cozinha){
-        //Implementar a Regra de Negóc io Aqui
+        //Implementar a Regra de Negócio Aqui
         return cozinhaRepository.salvar(cozinha);
     }
+
+    public void excluir(Long id){
+        try {
+            cozinhaRepository.remover(id);
+        }catch (EmptyResultDataAccessException e){
+            throw new EntidadeNaoEncontradaException(
+                String.format("Não existe um cadastro de cozinha com o código %d ",id));
+        }catch (DataIntegrityViolationException e){
+            throw new EntidadeEmUsoException(
+                String.format("Cozinha de Código %d não pode ser removida, pois está em uso",id));
+        }
+    }
+
 
 }

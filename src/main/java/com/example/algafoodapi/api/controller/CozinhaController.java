@@ -5,14 +5,13 @@ package com.example.algafoodapi.api.controller;
  *  @autor    : roberto
  */
 
-import com.example.algafoodapi.api.model.CozinhasXmlWrapper;
+import com.example.algafoodapi.dominio.exception.EntidadeEmUsoException;
+import com.example.algafoodapi.dominio.exception.EntidadeNaoEncontradaException;
 import com.example.algafoodapi.dominio.modelo.Cozinha;
 import com.example.algafoodapi.dominio.repository.CozinhaRepository;
 import com.example.algafoodapi.dominio.service.CadastroCozinhaService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -28,16 +27,11 @@ public class CozinhaController {
     private CozinhaRepository cozinhaRepository;
 
     @Autowired
-    private CadastroCozinhaService cadastroCozinhaService;
+    private CadastroCozinhaService cozinhaService;
 
     @GetMapping
     public List<Cozinha> listar(){
         return cozinhaRepository.listar();
-    }
-
-    @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
-    public CozinhasXmlWrapper listarXml(){
-        return new CozinhasXmlWrapper(cozinhaRepository.listar());
     }
 
     @GetMapping("/{id}")
@@ -55,7 +49,7 @@ public class CozinhaController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Cozinha adicionar(@RequestBody Cozinha cozinha){
-        return cadastroCozinhaService.salvar(cozinha);
+        return cozinhaService.salvar(cozinha);
     }
 
     @PutMapping("/{id}")
@@ -66,7 +60,7 @@ public class CozinhaController {
         if (cozinhaAtual != null) {
             //cozinhaAtual.setNome(cozinha.getNome());
             BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
-            cozinhaRepository.salvar(cozinhaAtual);
+            cozinhaService.salvar(cozinhaAtual);
             return ResponseEntity.ok(cozinhaAtual);
         }
         return ResponseEntity.notFound().build();
@@ -74,18 +68,17 @@ public class CozinhaController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Cozinha> remover(@PathVariable Long id){
-
         try {
-            Cozinha cozinhaAtual = cozinhaRepository.buscar(id);
+            cozinhaService.excluir(id);
+            return  ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
-            if (cozinhaAtual != null){
-                cozinhaRepository.remover(cozinhaAtual);
-                return  ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-            }
+        }catch (EntidadeNaoEncontradaException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
-        }catch (DataIntegrityViolationException e){
+        }catch (EntidadeEmUsoException e){
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
+
     }
+
 }
