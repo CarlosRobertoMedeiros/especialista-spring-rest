@@ -17,7 +17,7 @@ public class CadastroCozinhaService {
     private CozinhaRepository cozinhaRepository;
 
     public Cozinha salvar(Cozinha cozinha){
-        //Implementar a Regra de Negócio Aqui
+        //Implementar a Regra de Negóc io Aqui
         return cozinhaRepository.salvar(cozinha);
     }
 
