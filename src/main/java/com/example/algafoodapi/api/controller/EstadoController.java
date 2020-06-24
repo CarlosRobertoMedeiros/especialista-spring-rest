@@ -4,15 +4,16 @@ package com.example.algafoodapi.api.controller;/*
  *  @autor    : roberto
  */
 
+import com.example.algafoodapi.dominio.exception.EntidadeEmUsoException;
+import com.example.algafoodapi.dominio.exception.EntidadeNaoEncontradaException;
 import com.example.algafoodapi.dominio.modelo.Estado;
 import com.example.algafoodapi.dominio.repository.EstadoRepository;
 import com.example.algafoodapi.dominio.service.CadastroEstadoService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.xml.ws.Response;
 import java.util.List;
 
 
@@ -50,7 +51,32 @@ public class EstadoController {
         return estadoService.salvar(estado);
     }
 
-    //TODO: FALTA IMPLEMENTAR O ATUALIZAR E O REMOVER
-    // CONTINUAR 4.32
+
+    @PutMapping("/{idEstado}")
+    public ResponseEntity<Estado> atualizar(@PathVariable Long idEstado, @RequestBody Estado estado){
+        Estado estadoAtual = estadoRepository.buscar(idEstado);
+
+        if(estado!=null){
+            BeanUtils.copyProperties(estado,estadoAtual,"id");
+            estadoAtual = estadoService.salvar(estadoAtual);
+            return ResponseEntity.ok(estadoAtual);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{idEstado}")
+    public ResponseEntity<?> remover(@PathVariable Long idEstado){
+        try{
+            estadoService.excluir(idEstado);
+            return ResponseEntity.noContent().build();
+        }catch (EntidadeNaoEncontradaException e){
+            return ResponseEntity.notFound().build();
+        }catch (EntidadeEmUsoException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
+    }
+
+
+
 
 }
