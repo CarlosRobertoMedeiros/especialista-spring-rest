@@ -6,13 +6,12 @@ package com.example.algafoodapi.dominio.repository;
  */
 
 import com.example.algafoodapi.dominio.modelo.Permissao;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface PermissaoRepository {
+@Repository
+public interface PermissaoRepository extends JpaRepository<Permissao,Long> {
 
-    List<Permissao> listar();
-    Permissao buscar(Long id);
-    Permissao salvar(Permissao permissao);
-    void remover(Permissao permissao);
 }
