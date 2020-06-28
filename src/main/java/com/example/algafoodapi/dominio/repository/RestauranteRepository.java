@@ -20,6 +20,9 @@ import java.util.Optional;
 public interface RestauranteRepository  extends JpaRepository<Restaurante,Long>, RestauranteRepositoryQueries,
                                                 JpaSpecificationExecutor<Restaurante> {
 
+    @Query("from Restaurante r join fetch r.cozinha join fetch r.formasdePagamento")
+    List<Restaurante> findAll();
+
     List<Restaurante> findByTaxaFreteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
 
     //List<Restaurante> findByNomeContainingAndCozinhaId(String nome, Long cozinha);

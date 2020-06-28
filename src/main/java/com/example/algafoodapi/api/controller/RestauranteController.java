@@ -35,7 +35,7 @@ public class RestauranteController {
 
     @GetMapping
     public List<Restaurante> listarTodos(){
-        return restauranteRepository.findAll();
+        return  restauranteRepository.findAll();
     }
 
     @GetMapping("/{id}")
