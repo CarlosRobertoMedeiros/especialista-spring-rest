@@ -2,4 +2,11 @@ spring:
   profiles:
     active: dev
 
+  datasource:
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 3 #Minimo de Conexões
+      idle-timeout: 10000 #Tempo Máximo de ociosidade
+
+
 
