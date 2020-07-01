@@ -5,7 +5,6 @@ package com.example.algafoodapi.api.controller;
  *  @autor    : roberto
  */
 
-import com.example.algafoodapi.dominio.exception.EntidadeEmUsoException;
 import com.example.algafoodapi.dominio.exception.EntidadeNaoEncontradaException;
 import com.example.algafoodapi.dominio.modelo.Cozinha;
 import com.example.algafoodapi.dominio.repository.CozinhaRepository;
@@ -36,15 +35,8 @@ public class CozinhaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cozinha> buscar(@PathVariable Long id){
-        Optional<Cozinha> cozinha = cozinhaRepository.findById(id);
-
-        if (cozinha.isPresent())
-            return ResponseEntity.ok(cozinha.get());
-
-        return  ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .build();
+    public Cozinha buscar(@PathVariable Long id){
+        return cozinhaService.buscarOuFalhar(id);
     }
 
     @PostMapping
@@ -54,32 +46,18 @@ public class CozinhaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cozinha> atualizar(@PathVariable Long id,
+    public Cozinha atualizar(@PathVariable Long id,
                                              @RequestBody Cozinha cozinha){
-        Optional<Cozinha> cozinhaAtual = cozinhaRepository.findById(id);
-
-        if (cozinhaAtual.isPresent()) {
-            //cozinhaAtual.setNome(cozinha.getNome());
-            BeanUtils.copyProperties(cozinha, cozinhaAtual.get(), "id");
-            Cozinha cozinhaSalva = cozinhaService.salvar(cozinhaAtual.get());
-            return ResponseEntity.ok(cozinhaSalva);
-        }
-        return ResponseEntity.notFound().build();
+        Cozinha cozinhaAtual = cozinhaService.buscarOuFalhar(id);
+        BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
+         return cozinhaService.salvar(cozinhaAtual);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> remover(@PathVariable Long id){
-        try {
-            cozinhaService.excluir(id);
-            return  ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-
-        }catch (EntidadeNaoEncontradaException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-
-        }catch (EntidadeEmUsoException e){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        }
-
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void remover(@PathVariable Long id){
+         cozinhaService.excluir(id);
     }
+
 
 }

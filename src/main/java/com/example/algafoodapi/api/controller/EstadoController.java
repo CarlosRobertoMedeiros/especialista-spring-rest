@@ -22,6 +22,9 @@ import java.util.Optional;
 @RequestMapping("/estados")
 public class EstadoController {
 
+    private static final String MSG_ESTADO_NAO_ENCONTRADA = "Não existe um cadastro de estado com o código %d";
+    private static final String MSG_ESTADO_EM_USO = "Estado de Código %d não pode ser removida, pois está em uso";
+
     @Autowired
     private EstadoRepository estadoRepository;
 
@@ -34,16 +37,12 @@ public class EstadoController {
     }
 
     @GetMapping("/{idEstado}")
-    public ResponseEntity<Estado> buscar(@PathVariable Long idEstado){
-        Optional<Estado> estado = estadoRepository.findById(idEstado);
+    public Estado buscar(@PathVariable Long idEstado){
 
-        if (estado.isPresent()){
-            return ResponseEntity
-                        .ok(estado.get());
-        }
-        return ResponseEntity
-                   .status(HttpStatus.NOT_FOUND)
-                    .build();
+        return estadoRepository.findById(idEstado)
+                .orElseThrow(()-> new EntidadeNaoEncontradaException(
+                        String.format(MSG_ESTADO_NAO_ENCONTRADA,idEstado)));
+
     }
 
     @PostMapping
