@@ -101,7 +101,6 @@ create table app.tb_usuario_grupo (
 
 
 
-
 alter table app.tb_grupo_permissao add constraint fk_grupo_permissao_permissao
 foreign key (permissao_id) references app.tb_permissao (id);
 
