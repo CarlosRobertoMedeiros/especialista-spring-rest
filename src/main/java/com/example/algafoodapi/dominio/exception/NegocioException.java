@@ -8,10 +8,14 @@ package com.example.algafoodapi.dominio.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value= HttpStatus.NOT_FOUND)
-public abstract class EntidadeNaoEncontradaException extends NegocioException {
+@ResponseStatus(value= HttpStatus.BAD_REQUEST)
+public class NegocioException extends RuntimeException {
 
-    public EntidadeNaoEncontradaException(String message) {
+    public NegocioException(String message) {
         super(message);
+    }
+
+    public NegocioException(String message, Throwable causa) {
+        super(message,causa);
     }
 }

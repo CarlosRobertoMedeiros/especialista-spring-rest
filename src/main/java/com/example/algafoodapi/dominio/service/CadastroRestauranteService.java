@@ -5,15 +5,12 @@ package com.example.algafoodapi.dominio.service;
  *  @autor    : roberto
  */
 
-import com.example.algafoodapi.dominio.exception.EntidadeNaoEncontradaException;
+import com.example.algafoodapi.dominio.exception.RestauranteNaoEncontradaException;
 import com.example.algafoodapi.dominio.modelo.Cozinha;
 import com.example.algafoodapi.dominio.modelo.Restaurante;
-import com.example.algafoodapi.dominio.repository.CozinhaRepository;
 import com.example.algafoodapi.dominio.repository.RestauranteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class CadastroRestauranteService {
@@ -22,19 +19,16 @@ public class CadastroRestauranteService {
     private RestauranteRepository restauranteRepository;
 
     @Autowired
-    private CozinhaRepository cozinhaRepository;
+    private CadastroCozinhaService cozinhaService;
 
     public Restaurante salvar(Restaurante restaurante){
         Long cozinhaId = restaurante.getCozinha().getId();
-        Optional<Cozinha> cozinha = Optional.ofNullable(cozinhaRepository.findById(cozinhaId)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException(
-                        String.format("Não Existe Cadastro de Cozinha com o Código %d ", cozinhaId))));
-
-        restaurante.setCozinha(cozinha.get());
+        Cozinha cozinha = cozinhaService.buscarOuFalhar(cozinhaId);
+        restaurante.setCozinha(cozinha);
         return  restauranteRepository.save(restaurante);
     }
 
-
-
-
+    public Restaurante buscarOuFalhar(Long id) {
+        return restauranteRepository.findById(id).orElseThrow(()-> new RestauranteNaoEncontradaException(id));
+    }
 }

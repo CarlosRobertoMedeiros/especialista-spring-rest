@@ -7,6 +7,7 @@ package com.example.algafoodapi.dominio.service;
 
 import com.example.algafoodapi.dominio.exception.EntidadeEmUsoException;
 import com.example.algafoodapi.dominio.exception.EntidadeNaoEncontradaException;
+import com.example.algafoodapi.dominio.exception.EstadoNaoEncontradoException;
 import com.example.algafoodapi.dominio.modelo.Estado;
 import com.example.algafoodapi.dominio.repository.EstadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CadastroEstadoService {
+
+    private static final String MSG_ESTADO_EM_USO = "Estado de código %d não pode ser removido, pois está em uso";
 
     @Autowired
     private EstadoRepository estadoRepository;
@@ -28,12 +31,16 @@ public class CadastroEstadoService {
         try{
             estadoRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
-            throw new EntidadeNaoEncontradaException(
-                String.format("Não existe um cadastro de estado com código %d", id));
+            throw new EstadoNaoEncontradoException(id);
 
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(
-                String.format("Estado de código %d não pode ser removido, pois está em uso", id));
+                String.format(MSG_ESTADO_EM_USO, id));
         }
+    }
+
+    public Estado buscarOuFalhar(Long idEstado) {
+        return estadoRepository.findById(idEstado)
+                .orElseThrow(()-> new EstadoNaoEncontradoException(idEstado));
     }
 }

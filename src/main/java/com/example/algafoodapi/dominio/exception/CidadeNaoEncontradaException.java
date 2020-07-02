@@ -9,9 +9,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value= HttpStatus.NOT_FOUND)
-public abstract class EntidadeNaoEncontradaException extends NegocioException {
+public class CidadeNaoEncontradaException extends NegocioException {
 
-    public EntidadeNaoEncontradaException(String message) {
+    public CidadeNaoEncontradaException(String message) {
         super(message);
+    }
+
+    public CidadeNaoEncontradaException(Long id) {
+        this(String.format("Não existe um cadastro de cidade com código %d",id));
     }
 }
