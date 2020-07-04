@@ -5,7 +5,6 @@ package com.example.algafoodapi.api.controller;
  *  @autor    : roberto
  */
 
-import com.example.algafoodapi.dominio.exception.EntidadeNaoEncontradaException;
 import com.example.algafoodapi.dominio.exception.EstadoNaoEncontradoException;
 import com.example.algafoodapi.dominio.exception.NegocioException;
 import com.example.algafoodapi.dominio.modelo.Cidade;
@@ -14,7 +13,6 @@ import com.example.algafoodapi.dominio.service.CadastroCidadeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -67,13 +65,6 @@ public class CidadeController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remover(@PathVariable Long cidadeId) {
            cidadeService.excluir(cidadeId);
-    }
-
-    @ExceptionHandler(EntidadeNaoEncontradaException.class)
-    public ResponseEntity<?> tratarEntidadeNaoEncontradaException(EntidadeNaoEncontradaException e){
-        return  ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(e.getMessage());
     }
 
 }
