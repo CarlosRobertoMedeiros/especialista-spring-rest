@@ -8,5 +8,20 @@ spring:
       minimum-idle: 3 #Minimo de Conexões
       idle-timeout: 10000 #Tempo Máximo de ociosidade
 
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+      fail-on-ignored-properties: true
+
+  #Assim habilita funcionalidades que não sobem no debug
+  # exemplo NoHandlerFoundException
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+
+
+
+
 
 

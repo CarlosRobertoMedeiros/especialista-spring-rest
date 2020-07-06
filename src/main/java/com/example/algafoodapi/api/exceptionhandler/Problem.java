@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 /**
  * Implementando o Padrão de Resposta baseado na RFC 7807 (Problem Details for HTTP APIs)
  *
@@ -30,5 +32,7 @@ public class Problem {
     private String title;
     private String detail;
 
+    private String userMessage;
+    private LocalDateTime timestamp;
 
 }
