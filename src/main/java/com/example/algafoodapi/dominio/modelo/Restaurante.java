@@ -5,6 +5,7 @@ package com.example.algafoodapi.dominio.modelo;
  *  @autor    : roberto
  */
 
+import com.example.algafoodapi.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -17,6 +18,10 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -29,13 +34,19 @@ public class Restaurante {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Nome é Obrigatório")
     @Column(nullable = false)
     private String nome;
 
+//    @DecimalMin("0")
+    @PositiveOrZero
     @Column(name="taxa_frete" , nullable = false)
     private BigDecimal taxaFrete;
 
     //@JsonIgnore
+    @Valid
+    @ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
+    @NotNull
     @JsonIgnoreProperties("hibernateLazyInitializer")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cozinha_id", nullable = false)
@@ -55,7 +66,6 @@ public class Restaurante {
     @Column(nullable = false, columnDefinition = "datetime")
     private LocalDateTime dataAtualizacao;
 
-
     @JsonIgnore
     @ManyToMany
     @JoinTable(name = "tb_restaurante_forma_pagamento",
@@ -67,6 +77,5 @@ public class Restaurante {
     @JsonIgnore
     @OneToMany(mappedBy = "restaurante")
     private List<Produto> produtos = new ArrayList<>();
-
 
 }

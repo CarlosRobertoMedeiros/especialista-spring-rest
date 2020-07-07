@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Implementando o Padrão de Resposta baseado na RFC 7807 (Problem Details for HTTP APIs)
@@ -34,5 +35,12 @@ public class Problem {
 
     private String userMessage;
     private LocalDateTime timestamp;
+    private List<Field> fields;
 
+    @Getter
+    @Builder
+    public static class Field{
+        private String name;
+        private String userMessage;
+    }
 }
