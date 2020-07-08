@@ -5,7 +5,7 @@ package com.example.algafoodapi.api.controller;
  *  @autor    : roberto
  */
 
-import com.example.algafoodapi.Groups;
+import com.example.algafoodapi.core.validation.ValidacaoException;
 import com.example.algafoodapi.dominio.exception.CozinhaNaoEncontradaException;
 import com.example.algafoodapi.dominio.exception.EntidadeNaoEncontradaException;
 import com.example.algafoodapi.dominio.exception.NegocioException;
@@ -22,11 +22,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.util.ReflectionUtils;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.SmartValidator;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +42,9 @@ public class RestauranteController {
 
     @Autowired
     private CadastroRestauranteService restauranteService;
+
+    @Autowired
+    private SmartValidator validator;
 
     @GetMapping
     public List<Restaurante> listarTodos(){
@@ -81,7 +86,18 @@ public class RestauranteController {
 
         Restaurante restauranteAtual = restauranteService.buscarOuFalhar(restauranteId);
         merge(campos, restauranteAtual, request);
+        validate(restauranteAtual, "restaurante");
         return atualizar(restauranteAtual,restauranteId);
+    }
+
+    private void validate(Restaurante restaurante, String objectName) {
+        BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(restaurante,objectName);
+        validator.validate(restaurante,bindingResult);
+
+        if (bindingResult.hasErrors()){
+            throw new ValidacaoException(bindingResult);
+        }
+
     }
 
     private void merge(@RequestBody Map<String, Object> dadosOrigem, Restaurante restauranteDestino,HttpServletRequest request) {

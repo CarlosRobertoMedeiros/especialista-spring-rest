@@ -5,7 +5,7 @@ package com.example.algafoodapi.dominio.modelo;
  *  @autor    : roberto
  */
 
-import com.example.algafoodapi.Groups;
+import com.example.algafoodapi.core.validation.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -5,7 +5,10 @@ package com.example.algafoodapi.dominio.modelo;
  *  @autor    : roberto
  */
 
-import com.example.algafoodapi.Groups;
+import com.example.algafoodapi.core.validation.Groups;
+import com.example.algafoodapi.core.validation.Multiplo;
+import com.example.algafoodapi.core.validation.TaxaFrete;
+import com.example.algafoodapi.core.validation.ValorZeroIncluiDescricao;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -23,6 +26,8 @@ import javax.validation.constraints.*;
 import javax.validation.groups.ConvertGroup;
 import javax.validation.groups.Default;
 
+@ValorZeroIncluiDescricao(valorField="taxaFrete",
+        decricaoField="nome", descricaoObrigatoria="Frete Grátis")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
@@ -34,12 +39,14 @@ public class Restaurante {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Nome é Obrigatório")
+    @NotBlank
     @Column(nullable = false)
     private String nome;
 
 //    @DecimalMin("0")
-    @PositiveOrZero
+    @NotNull
+    //@PositiveOrZero(message = "{TaxaFrete.invalida}")
+    @Multiplo(numero=5)
     @Column(name="taxa_frete" , nullable = false)
     private BigDecimal taxaFrete;
 
