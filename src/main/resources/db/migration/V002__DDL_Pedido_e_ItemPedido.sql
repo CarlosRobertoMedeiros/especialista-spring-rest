@@ -1,4 +1,4 @@
-create table app.tb_pedido (
+create table tb_pedido (
     id bigint not null auto_increment,
     subtotal decimal(10,2) not null,
     taxa_frete decimal(10,2) not null,
@@ -23,12 +23,12 @@ create table app.tb_pedido (
 
     primary key (id),
 
-    constraint fk_pedido_restaurante foreign key (restaurante_id) references app.tb_restaurante (id),
-    constraint fk_pedido_usuario_cliente foreign key (usuario_cliente_id) references app.tb_usuario (id),
-    constraint fk_pedido_forma_pagamento foreign key (forma_pagamento_id) references app.tb_forma_pagamento (id)
+    constraint fk_pedido_restaurante foreign key (restaurante_id) references tb_restaurante (id),
+    constraint fk_pedido_usuario_cliente foreign key (usuario_cliente_id) references tb_usuario (id),
+    constraint fk_pedido_forma_pagamento foreign key (forma_pagamento_id) references tb_forma_pagamento (id)
 ) engine=InnoDB default charset=utf8;
 
-create table app.tb_item_pedido (
+create table tb_item_pedido (
     id bigint not null auto_increment,
     quantidade smallint(6) not null,
     preco_unitario decimal(10,2) not null,
@@ -40,6 +40,6 @@ create table app.tb_item_pedido (
     primary key (id),
     unique key uk_item_pedido_produto (pedido_id, produto_id),
 
-    constraint fk_item_pedido_pedido foreign key (pedido_id) references app.tb_pedido (id),
-    constraint fk_item_pedido_produto foreign key (produto_id) references app.tb_produto (id)
+    constraint fk_item_pedido_pedido foreign key (pedido_id) references tb_pedido (id),
+    constraint fk_item_pedido_produto foreign key (produto_id) references tb_produto (id)
 ) engine=InnoDB default charset=utf8;

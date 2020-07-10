@@ -8,8 +8,7 @@ package com.example.algafoodapi.dominio.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value= HttpStatus.NOT_FOUND)
-public class CidadeNaoEncontradaException extends NegocioException {
+public class CidadeNaoEncontradaException extends EntidadeNaoEncontradaException {
 
     public CidadeNaoEncontradaException(String message) {
         super(message);
