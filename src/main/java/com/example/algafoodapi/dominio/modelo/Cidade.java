@@ -6,6 +6,7 @@ package com.example.algafoodapi.dominio.modelo;
  */
 
 import com.example.algafoodapi.core.validation.Groups;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -32,6 +33,7 @@ public class Cidade {
     @Column(nullable = false)
     private String nome;
 
+    @JsonIgnoreProperties(value = "nome", allowGetters = true)
     @Valid
     @ConvertGroup(from = Default.class, to = Groups.EstadoId.class)
     @NotNull

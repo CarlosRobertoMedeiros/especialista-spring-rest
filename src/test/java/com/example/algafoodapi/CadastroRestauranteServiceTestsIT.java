@@ -6,10 +6,8 @@ import com.example.algafoodapi.dominio.repository.CozinhaRepository;
 import com.example.algafoodapi.dominio.repository.RestauranteRepository;
 import com.example.algafoodapi.util.DataBaseCleaner;
 import com.example.algafoodapi.util.ResourceUtils;
-import com.sun.deploy.security.CertStore;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import javafx.scene.control.cell.TextFieldListCell;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +21,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.math.BigDecimal;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
 
 
 @RunWith(SpringRunner.class) //Carrega Contexto de Injeção de Dependência
