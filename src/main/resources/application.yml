@@ -12,6 +12,8 @@ spring:
     deserialization:
       fail-on-unknown-properties: true
       fail-on-ignored-properties: true
+    serialization:
+      fail-on-empty-beans: false
 
   #Assim habilita funcionalidades que não sobem no debug
   # exemplo NoHandlerFoundException

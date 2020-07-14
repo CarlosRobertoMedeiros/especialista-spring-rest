@@ -33,7 +33,7 @@ public class Cidade {
     @Column(nullable = false)
     private String nome;
 
-    @JsonIgnoreProperties(value = "nome", allowGetters = true)
+    //@JsonIgnoreProperties(value = "nome", allowGetters = true)
     @Valid
     @ConvertGroup(from = Default.class, to = Groups.EstadoId.class)
     @NotNull
