@@ -7,6 +7,7 @@ package com.example.algafoodapi.dominio.modelo;
 
 import com.example.algafoodapi.core.validation.Groups;
 import com.example.algafoodapi.core.validation.ValorZeroIncluiDescricao;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;

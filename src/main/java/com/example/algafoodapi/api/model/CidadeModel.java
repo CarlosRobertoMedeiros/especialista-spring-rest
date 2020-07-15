@@ -1,6 +1,6 @@
 package com.example.algafoodapi.api.model;
 /*
- *  @criado em: 14/07/2020 - {13:07}
+ *  @criado em: 15/07/2020 - {08:12}
  *  @projeto  : algafood-api
  *  @autor    : roberto
  */
@@ -8,15 +8,11 @@ package com.example.algafoodapi.api.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-
-@Getter
 @Setter
-public class RestauranteModel {
+@Getter
+public class CidadeModel {
 
     private Long id;
     private String nome;
-    private BigDecimal taxaFrete;
-    private CozinhaModel cozinha;
-
+    private EstadoModel estado;
 }

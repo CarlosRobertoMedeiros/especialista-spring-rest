@@ -5,29 +5,27 @@ package com.example.algafoodapi.api.assembler;
  *  @autor    : roberto
  */
 
+import com.example.algafoodapi.api.model.input.EstadoInput;
 import com.example.algafoodapi.api.model.input.RestauranteInput;
 import com.example.algafoodapi.dominio.modelo.Cozinha;
+import com.example.algafoodapi.dominio.modelo.Estado;
 import com.example.algafoodapi.dominio.modelo.Restaurante;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RestauranteInputDisassembler {
+public class EstadoInputDisassembler {
 
     @Autowired
     private ModelMapper modelMapper;
 
-    public Restaurante toDomainObject(RestauranteInput restauranteInput) {
-        return modelMapper.map(restauranteInput, Restaurante.class);
+    public Estado toDomainObject(EstadoInput estadoInput) {
+        return modelMapper.map(estadoInput, Estado.class);
     }
 
-    public void copyToDomainObject(RestauranteInput restauranteInput, Restaurante restaurante){
-        // Para evitar org.hibernate.HibernateException: identifier of an instance of
-        // com.algaworks.algafood.domain.model.Cozinha was altered from 1 to 2
-        restaurante.setCozinha(new Cozinha());
-
-        modelMapper.map(restauranteInput,restaurante);
+    public void copyToDomainObject(EstadoInput estadoInput, Estado estado) {
+        modelMapper.map(estadoInput, estado);
     }
 
 }

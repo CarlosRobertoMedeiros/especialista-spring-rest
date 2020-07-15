@@ -72,14 +72,15 @@ public class RestauranteController {
     public RestauranteModel atualizar(@RequestBody @Valid RestauranteInput restauranteInput,
                                                  @PathVariable Long id){
 
-        Restaurante restaurante = restauranteInputDisassembler.toDomainObject(restauranteInput);
-        Restaurante restauranteAtual = restauranteService.buscarOuFalhar(id);
-            BeanUtils.copyProperties(restaurante, restauranteAtual, "id","formasdePagamento", "endereco","dataCadastro", "produtos");
-            try{
-                return restauranteModelAssembler.toModel(restauranteService.salvar(restauranteAtual));
-            }catch (EntidadeNaoEncontradaException e){
-                throw new NegocioException(e.getMessage());
-            }
+        try{
+
+             Restaurante restauranteAtual = restauranteService.buscarOuFalhar(id);
+             restauranteInputDisassembler.copyToDomainObject(restauranteInput,restauranteAtual);
+             return restauranteModelAssembler.toModel(restauranteService.salvar(restauranteAtual));
+
+        }catch (EntidadeNaoEncontradaException e){
+            throw new NegocioException(e.getMessage());
+        }
     }
 
 
