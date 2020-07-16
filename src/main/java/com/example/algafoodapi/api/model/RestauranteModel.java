@@ -5,6 +5,7 @@ package com.example.algafoodapi.api.model;
  *  @autor    : roberto
  */
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,5 +19,6 @@ public class RestauranteModel {
     private String nome;
     private BigDecimal taxaFrete;
     private CozinhaModel cozinha;
+    private Boolean ativo;
 
 }

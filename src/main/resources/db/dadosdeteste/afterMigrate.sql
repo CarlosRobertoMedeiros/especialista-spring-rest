@@ -53,12 +53,12 @@ insert into tb_forma_pagamento (descricao) values ('Cartão de débito');
 insert into tb_forma_pagamento (descricao) values ('Dinheiro');
 
 #Inserindo Dados de Restaurante
-insert into tb_restaurante (nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao) values ('Thai Delivery', 9.50 , 2, utc_timestamp, utc_timestamp);
-insert into tb_restaurante (nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao) values ('Tuk Tuk Comida Indiana', 15,2 , utc_timestamp , utc_timestamp);
-insert into tb_restaurante (nome, taxa_frete, cozinha_id, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro, data_cadastro, data_atualizacao) values ('Thai Gourmet', 10, 1, 1, '38400-999', 'Rua João Pinheiro', '1000', 'Centro', utc_timestamp ,utc_timestamp);
-insert into tb_restaurante (nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao) values ('Java Steakhouse', 12, 3, utc_timestamp, utc_timestamp);
-insert into tb_restaurante (nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao) values ('Lanchonete do Tio Sam', 11, 4, utc_timestamp, utc_timestamp);
-insert into tb_restaurante (nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao) values ('Bar da Maria', 6, 4, utc_timestamp, utc_timestamp);
+insert into tb_restaurante (nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao ,ativo ) values ('Thai Delivery', 9.50 , 2, utc_timestamp, utc_timestamp, true);
+insert into tb_restaurante (nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao ,ativo) values ('Tuk Tuk Comida Indiana', 15,2 , utc_timestamp , utc_timestamp, true);
+insert into tb_restaurante (nome, taxa_frete, cozinha_id, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro, data_cadastro, data_atualizacao ,ativo) values ('Thai Gourmet', 10, 1, 1, '38400-999', 'Rua João Pinheiro', '1000', 'Centro', utc_timestamp ,utc_timestamp, true);
+insert into tb_restaurante (nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao ,ativo) values ('Java Steakhouse', 12, 3, utc_timestamp, utc_timestamp, true);
+insert into tb_restaurante (nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao ,ativo) values ('Lanchonete do Tio Sam', 11, 4, utc_timestamp, utc_timestamp, true);
+insert into tb_restaurante (nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao ,ativo) values ('Bar da Maria', 6, 4, utc_timestamp, utc_timestamp, true);
 
 #Inserindo Dados de Produtos
 insert into tb_produto (nome, descricao, preco, ativo, restaurante_id) values ('Porco com molho agridoce', 'Deliciosa carne suína ao molho especial', 78.90, 1, 1);

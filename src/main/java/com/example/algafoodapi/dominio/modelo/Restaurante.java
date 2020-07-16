@@ -31,6 +31,7 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name="tb_restaurante", schema = "app")
+//As anotações comentadas estão sendo seguidas baseando nos Dtos(Input)
 public class Restaurante {
 
     @EqualsAndHashCode.Include
@@ -38,26 +39,28 @@ public class Restaurante {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+//    @NotBlank
     @Column(nullable = false)
     private String nome;
 
 //    @DecimalMin("0")
-    @NotNull
-    @PositiveOrZero//(message = "{TaxaFrete.invalida}")
+//    @NotNull
+//    @PositiveOrZero//(message = "{TaxaFrete.invalida}")
     //@Multiplo(numero=5)
     @Column(name="taxa_frete" , nullable = false)
     private BigDecimal taxaFrete;
 
-    @Valid
-    @ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
-    @NotNull
+//    @Valid
+//    @ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
+//    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cozinha_id", nullable = false)
     private Cozinha cozinha;
 
     @Embedded
     private Endereco endereco;
+
+    private Boolean ativo = Boolean.TRUE;
 
     @CreationTimestamp
     @Column(nullable = false, columnDefinition = "datetime")
@@ -76,5 +79,13 @@ public class Restaurante {
 
     @OneToMany(mappedBy = "restaurante")
     private List<Produto> produtos = new ArrayList<>();
+
+    public void ativar(){
+        setAtivo(true);
+    }
+
+    public void inativar(){
+        setAtivo(false);
+    }
 
 }

@@ -12,11 +12,9 @@ import com.example.algafoodapi.api.model.input.RestauranteInput;
 import com.example.algafoodapi.dominio.exception.CozinhaNaoEncontradaException;
 import com.example.algafoodapi.dominio.exception.EntidadeNaoEncontradaException;
 import com.example.algafoodapi.dominio.exception.NegocioException;
-import com.example.algafoodapi.dominio.modelo.Cozinha;
 import com.example.algafoodapi.dominio.modelo.Restaurante;
 import com.example.algafoodapi.dominio.repository.RestauranteRepository;
 import com.example.algafoodapi.dominio.service.CadastroRestauranteService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -83,18 +81,19 @@ public class RestauranteController {
         }
     }
 
-
-    private Restaurante toDomainObject(RestauranteInput restauranteInput){
-
-        Restaurante restaurante = new Restaurante();
-        Cozinha cozinha = new Cozinha();
-
-        restaurante.setNome(restauranteInput.getNome());
-        restaurante.setTaxaFrete(restauranteInput.getTaxaFrete());
-        cozinha.setId(restauranteInput.getCozinha().getId());
-        restaurante.setCozinha(cozinha);
-
-        return restaurante;
+    @PutMapping("/{idRestaurante}/ativo")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void ativar(@PathVariable Long idRestaurante){
+        restauranteService.ativar(idRestaurante);
     }
+
+    @DeleteMapping("/{idRestaurante}/ativo")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void inativar(@PathVariable Long idRestaurante){
+        restauranteService.inativar(idRestaurante);
+    }
+
+
+
 
 }
