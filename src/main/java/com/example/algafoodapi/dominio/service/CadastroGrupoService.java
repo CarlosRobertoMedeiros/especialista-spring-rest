@@ -31,23 +31,23 @@ public class CadastroGrupoService {
     }
 
     @Transactional
-    public void excluir(Long grupoId) {
+    public void excluir(Long Id) {
         try {
-            grupoRepository.deleteById(grupoId);
+            grupoRepository.deleteById(Id);
             grupoRepository.flush();
 
         } catch (EmptyResultDataAccessException e) {
-            throw new GrupoNaoEncontradoException(grupoId);
+            throw new GrupoNaoEncontradoException(Id);
 
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(
-                    String.format(MSG_GRUPO_EM_USO, grupoId));
+                    String.format(MSG_GRUPO_EM_USO, Id));
         }
     }
 
-    public Grupo buscarOuFalhar(Long grupoId) {
-        return grupoRepository.findById(grupoId)
-                .orElseThrow(() -> new GrupoNaoEncontradoException(grupoId));
+    public Grupo buscarOuFalhar(Long Id) {
+        return grupoRepository.findById(Id)
+                .orElseThrow(() -> new GrupoNaoEncontradoException(Id));
     }
 
 }

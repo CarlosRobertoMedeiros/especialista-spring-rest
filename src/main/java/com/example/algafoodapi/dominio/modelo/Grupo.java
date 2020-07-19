@@ -28,8 +28,8 @@ public class Grupo {
 
     @ManyToMany
     @JoinTable(name = "tb_grupo_permissao",
-               joinColumns = @JoinColumn(name = "id_Grupo"),
-               inverseJoinColumns = @JoinColumn(name = "id_Permissao")
+               joinColumns = @JoinColumn(name = "grupo_id"),
+               inverseJoinColumns = @JoinColumn(name = "permissao_id")
     )
     List<Permissao> permissoes = new ArrayList<>();
 
