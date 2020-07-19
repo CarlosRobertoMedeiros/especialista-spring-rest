@@ -1,8 +1,22 @@
-package com.example.algafoodapi.api.model.input;/*
+package com.example.algafoodapi.api.model.input;
+/*
  *  @criado em: 19/07/2020 - {10:10}
  *  @projeto  : algafood-api
  *  @autor    : roberto
  */
 
-public class SenhaInput {
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.validation.constraints.NotBlank;
+
+@Getter
+@Setter
+public class SenhaInput{
+
+    @NotBlank
+    private String senhaAtual;
+
+    @NotBlank
+    private String novaSenha;
 }

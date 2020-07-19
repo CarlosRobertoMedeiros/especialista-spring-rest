@@ -80,3 +80,10 @@ insert into tb_restaurante_forma_pagamento (restaurante_id, forma_pagamento_id) 
 
 #Inserindo a Tabela de Grupo
 insert into tb_grupo (nome) values ('Gerente'), ('Vendedor'), ('Secretária'), ('Cadastrador');
+
+#Inserindo a Tabela de Usuários
+insert into tb_usuario (id, nome, email, senha, data_cadastro) values
+(1, 'João da Silva', 'joao.ger@algafood.com', '123', utc_timestamp),
+(2, 'Maria Joaquina', 'maria.vnd@algafood.com', '123', utc_timestamp),
+(3, 'José Souza', 'jose.aux@algafood.com', '123', utc_timestamp),
+(4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '123', utc_timestamp);
