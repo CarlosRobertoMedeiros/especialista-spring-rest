@@ -6,6 +6,7 @@ package com.example.algafoodapi.dominio.service;
  */
 
 import com.example.algafoodapi.dominio.exception.RestauranteNaoEncontradaException;
+import com.example.algafoodapi.dominio.modelo.Cidade;
 import com.example.algafoodapi.dominio.modelo.Cozinha;
 import com.example.algafoodapi.dominio.modelo.Restaurante;
 import com.example.algafoodapi.dominio.repository.RestauranteRepository;
@@ -22,11 +23,20 @@ public class CadastroRestauranteService {
     @Autowired
     private CadastroCozinhaService cozinhaService;
 
+    @Autowired
+    private CadastroCidadeService cidadeService;
+
     @Transactional
     public Restaurante salvar(Restaurante restaurante){
         Long cozinhaId = restaurante.getCozinha().getId();
+        Long cidadeId = restaurante.getEndereco().getCidade().getId();
+
         Cozinha cozinha = cozinhaService.buscarOuFalhar(cozinhaId);
+        Cidade cidade = cidadeService.buscarOuFalhar(cidadeId);
+
         restaurante.setCozinha(cozinha);
+        restaurante.getEndereco().setCidade(cidade);
+
         return  restauranteRepository.save(restaurante);
     }
 

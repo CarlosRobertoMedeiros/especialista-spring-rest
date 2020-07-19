@@ -77,3 +77,6 @@ insert into tb_permissao (nome, descricao) values ('EDITAR_COZINHAS', 'Permite e
 
 #Inserindo Dados de Formas de Pagamento para os Restaurantes
 insert into tb_restaurante_forma_pagamento (restaurante_id, forma_pagamento_id) values (1, 1), (1, 2), (1, 3), (2, 3), (3, 2), (3, 3), (4, 1), (4, 2), (5, 1), (5, 2), (6, 3);
+
+#Inserindo a Tabela de Grupo
+insert into tb_grupo (nome) values ('Gerente'), ('Vendedor'), ('Secretária'), ('Cadastrador');

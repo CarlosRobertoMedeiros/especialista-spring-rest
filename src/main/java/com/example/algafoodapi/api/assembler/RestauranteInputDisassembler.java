@@ -6,6 +6,7 @@ package com.example.algafoodapi.api.assembler;
  */
 
 import com.example.algafoodapi.api.model.input.RestauranteInput;
+import com.example.algafoodapi.dominio.modelo.Cidade;
 import com.example.algafoodapi.dominio.modelo.Cozinha;
 import com.example.algafoodapi.dominio.modelo.Restaurante;
 import org.modelmapper.ModelMapper;
@@ -26,6 +27,10 @@ public class RestauranteInputDisassembler {
         // Para evitar org.hibernate.HibernateException: identifier of an instance of
         // com.algaworks.algafood.domain.model.Cozinha was altered from 1 to 2
         restaurante.setCozinha(new Cozinha());
+
+        if (restaurante.getEndereco()!=null){
+            restaurante.getEndereco().setCidade(new Cidade());
+        }
 
         modelMapper.map(restauranteInput,restaurante);
     }
