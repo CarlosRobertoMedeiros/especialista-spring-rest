@@ -7,6 +7,8 @@ package com.example.algafoodapi.dominio.service;
 
 import com.example.algafoodapi.dominio.exception.NegocioException;
 import com.example.algafoodapi.dominio.exception.UsuarioNaoEncontradoException;
+import com.example.algafoodapi.dominio.modelo.Grupo;
+import com.example.algafoodapi.dominio.modelo.Restaurante;
 import com.example.algafoodapi.dominio.modelo.Usuario;
 import com.example.algafoodapi.dominio.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class CadastroUsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private CadastroGrupoService grupoService;
 
     @Autowired
     private EntityManager manager;
@@ -51,10 +56,28 @@ public class CadastroUsuarioService {
         usuario.setSenha(novaSenha);
     }
 
+    @Transactional
+    public void desassociarGrupo(Long usuarioId, Long grupoId){
+        Usuario usuario = buscarOuFalhar(usuarioId);
+        Grupo grupo = grupoService.buscarOuFalhar(grupoId);
+
+        usuario.removerGrupo(grupo);
+    }
+
+    @Transactional
+    public void associarGrupo(Long usuarioId, Long grupoId){
+        Usuario usuario = buscarOuFalhar(usuarioId);
+        Grupo grupo = grupoService.buscarOuFalhar(grupoId);
+
+        usuario.adicionarGrupo(grupo);
+    }
+
     public Usuario buscarOuFalhar(Long usuarioId) {
         return usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new UsuarioNaoEncontradoException(usuarioId));
     }
+
+
 
 
 }

@@ -9,10 +9,7 @@ import com.example.algafoodapi.api.assembler.RestauranteInputDisassembler;
 import com.example.algafoodapi.api.assembler.RestauranteModelAssembler;
 import com.example.algafoodapi.api.model.RestauranteModel;
 import com.example.algafoodapi.api.model.input.RestauranteInput;
-import com.example.algafoodapi.dominio.exception.CidadeNaoEncontradaException;
-import com.example.algafoodapi.dominio.exception.CozinhaNaoEncontradaException;
-import com.example.algafoodapi.dominio.exception.EntidadeNaoEncontradaException;
-import com.example.algafoodapi.dominio.exception.NegocioException;
+import com.example.algafoodapi.dominio.exception.*;
 import com.example.algafoodapi.dominio.modelo.Restaurante;
 import com.example.algafoodapi.dominio.repository.RestauranteRepository;
 import com.example.algafoodapi.dominio.service.CadastroRestauranteService;
@@ -88,10 +85,30 @@ public class RestauranteController {
         restauranteService.ativar(idRestaurante);
     }
 
+    @PutMapping("/ativacoes")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void ativarEmMassa(@RequestBody List<Long> restauranteIds){
+        try{
+            restauranteService.ativar(restauranteIds);
+        }catch (RestauranteNaoEncontradaException e){
+            throw new NegocioException(e.getMessage(),e);
+        }
+    }
+
     @DeleteMapping("/{idRestaurante}/ativo")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void inativar(@PathVariable Long idRestaurante){
         restauranteService.inativar(idRestaurante);
+    }
+
+    @DeleteMapping("/ativacoes")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void inativarEmMassa(@RequestBody List<Long> restauranteIds){
+        try {
+            restauranteService.inativar(restauranteIds);
+        }catch (RestauranteNaoEncontradaException e){
+            throw new NegocioException(e.getMessage(),e);
+        }
     }
 
     @PutMapping("/{restauranteId}/abertura")

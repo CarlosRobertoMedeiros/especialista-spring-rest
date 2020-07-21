@@ -14,6 +14,9 @@ delete from tb_restaurante;
 delete from tb_restaurante_forma_pagamento;
 delete from tb_usuario;
 delete from tb_usuario_grupo;
+delete from tb_restaurante_usuario_responsavel;
+delete from tb_pedido;
+delete from tb_item_pedido;
 
 #Reabilita as Fks
 SET FOREIGN_KEY_CHECKS=1;
@@ -28,6 +31,8 @@ alter table tb_permissao auto_increment=1;
 alter table tb_produto auto_increment=1;
 alter table tb_restaurante auto_increment=1;
 alter table tb_usuario auto_increment=1;
+alter table tb_pedido auto_increment=1;
+alter table tb_item_pedido auto_increment=1;
 
 #Inserindo Dados de Cozinha
 insert into tb_cozinha(nome) values ('Tailandesa');
@@ -86,7 +91,42 @@ insert into tb_usuario (id, nome, email, senha, data_cadastro) values
 (1, 'João da Silva', 'joao.ger@algafood.com', '123', utc_timestamp),
 (2, 'Maria Joaquina', 'maria.vnd@algafood.com', '123', utc_timestamp),
 (3, 'José Souza', 'jose.aux@algafood.com', '123', utc_timestamp),
-(4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '123', utc_timestamp);
+(4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '123', utc_timestamp),
+(5, 'Manoel Lima', 'manoel.loja@gmail.com', '123', utc_timestamp);
 
 #Inserindo os dados na tabela Grupo_Permissoes
 insert into tb_grupo_permissao (grupo_id, permissao_id) values (1, 1), (1, 2), (2, 1), (2, 2), (3, 1);
+
+#Inserindo Dados do Grupo de Usuários
+insert into tb_usuario_grupo(usuario_id,grupo_id) values (1,1),(1,2),(2,2);
+
+#Inserindo Dados Para associação entre restaurante e responsável
+insert into tb_restaurante_usuario_responsavel (restaurante_id, usuario_id) values (1, 5), (3, 5);
+
+#Inserindo Dados Para Pedido
+insert into tb_pedido (id, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep,
+                       endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
+                       status, data_criacao, subtotal, taxa_frete, valor_total)
+values (1, 1, 1, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801', 'Brasil',
+                       'CRIADO', utc_timestamp, 298.90, 10, 308.90);
+
+insert into tb_pedido (id, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep,
+        endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
+        status, data_criacao, subtotal, taxa_frete, valor_total)
+values (2, 4, 1, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro',
+'CRIADO', utc_timestamp, 79, 0, 79);
+
+#Inserindo Dados para Itens do Pedido
+insert into tb_item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (1, 1, 1, 1, 78.9, 78.9, null);
+
+insert into tb_item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (2, 1, 2, 2, 110, 220, 'Menos picante, por favor');
+
+insert into tb_item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (3, 2, 6, 1, 79, 79, 'Ao ponto');
+
+
+
+
+
