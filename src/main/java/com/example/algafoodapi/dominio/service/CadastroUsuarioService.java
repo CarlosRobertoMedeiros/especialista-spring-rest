@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.Optional;
 
 @Service
@@ -21,9 +22,13 @@ public class CadastroUsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private EntityManager manager;
+
     @Transactional
     public Usuario salvar(Usuario usuario) {
-        usuarioRepository.detach(usuario); //Desatachar o usuário devido ao erro de exceção do
+        manager.detach(usuario);
+        //usuarioRepository.detach(usuario); //Desatachar o usuário devido ao erro de exceção do
                                  // sistema evitando sincronização com o banco de dados para atualização
         Optional<Usuario> usuarioExistente = usuarioRepository.findByEmail(usuario.getEmail());
 

@@ -14,7 +14,9 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /*@ValorZeroIncluiDescricao(valorField="taxaFrete",
         decricaoField="nome", descricaoObrigatoria="Frete Grátis")*/
@@ -53,6 +55,8 @@ public class Restaurante {
 
     private Boolean ativo = Boolean.TRUE;
 
+    private Boolean aberto = Boolean.FALSE;
+
     @CreationTimestamp
     @Column(nullable = false, columnDefinition = "datetime")
     private OffsetDateTime dataCadastro;
@@ -65,7 +69,7 @@ public class Restaurante {
     @JoinTable(name = "tb_restaurante_forma_pagamento",
                joinColumns = @JoinColumn(name = "restaurante_id"),
                inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
-    private List<FormaPagamento> formasdePagamento = new ArrayList<>();
+    private Set<FormaPagamento> formasdePagamento = new HashSet<>();
 
 
     @OneToMany(mappedBy = "restaurante")
@@ -77,6 +81,21 @@ public class Restaurante {
 
     public void inativar(){
         setAtivo(false);
+    }
+
+    public boolean removerFormaPagamento(FormaPagamento formaPagamento){
+        return getFormasdePagamento().remove(formaPagamento);
+    }
+
+    public boolean adicionarFormaPagamento(FormaPagamento formaPagamento){
+        return getFormasdePagamento().add(formaPagamento);
+    }
+
+    public void abrir(){
+        setAberto(true);
+    }
+    public void fechar(){
+        setAberto(false);
     }
 
 }

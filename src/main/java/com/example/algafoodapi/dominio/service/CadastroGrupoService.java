@@ -8,6 +8,7 @@ package com.example.algafoodapi.dominio.service;
 import com.example.algafoodapi.dominio.exception.EntidadeEmUsoException;
 import com.example.algafoodapi.dominio.exception.GrupoNaoEncontradoException;
 import com.example.algafoodapi.dominio.modelo.Grupo;
+import com.example.algafoodapi.dominio.modelo.Permissao;
 import com.example.algafoodapi.dominio.repository.GrupoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -24,6 +25,9 @@ public class CadastroGrupoService {
 
     @Autowired
     private GrupoRepository grupoRepository;
+
+    @Autowired
+    private CadastroPermissaoService permissaoService;
 
     @Transactional
     public Grupo salvar(Grupo grupo) {
@@ -48,6 +52,22 @@ public class CadastroGrupoService {
     public Grupo buscarOuFalhar(Long Id) {
         return grupoRepository.findById(Id)
                 .orElseThrow(() -> new GrupoNaoEncontradoException(Id));
+    }
+
+    @Transactional
+    public void desassociarPermissao(Long grupoId, Long permissaoId) {
+        Grupo grupo = buscarOuFalhar(grupoId);
+        Permissao permissao = permissaoService.buscarOuFalhar(permissaoId);
+
+        grupo.removerPermissao(permissao);
+    }
+
+    @Transactional
+    public void associarPermissao(Long grupoId, Long permissaoId) {
+        Grupo grupo = buscarOuFalhar(grupoId);
+        Permissao permissao = permissaoService.buscarOuFalhar(permissaoId);
+
+        grupo.adicionarPermissao(permissao);
     }
 
 }
