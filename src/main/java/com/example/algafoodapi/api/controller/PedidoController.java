@@ -5,17 +5,23 @@ package com.example.algafoodapi.api.controller;
  *  @autor    : roberto
  */
 
+import com.example.algafoodapi.api.assembler.PedidoInputDisassembler;
 import com.example.algafoodapi.api.assembler.PedidoModelAssembler;
+import com.example.algafoodapi.api.assembler.PedidoResumoModelAssembler;
 import com.example.algafoodapi.api.model.PedidoModel;
+import com.example.algafoodapi.api.model.PedidoResumoModel;
+import com.example.algafoodapi.api.model.input.PedidoInput;
+import com.example.algafoodapi.dominio.exception.EntidadeNaoEncontradaException;
+import com.example.algafoodapi.dominio.exception.NegocioException;
 import com.example.algafoodapi.dominio.modelo.Pedido;
+import com.example.algafoodapi.dominio.modelo.Usuario;
 import com.example.algafoodapi.dominio.repository.PedidoRepository;
 import com.example.algafoodapi.dominio.service.EmissaoPedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -31,11 +37,17 @@ public class PedidoController {
     @Autowired
     private PedidoModelAssembler pedidoModelAssembler;
 
+    @Autowired
+    private PedidoResumoModelAssembler pedidoResumoModelAssemblerModelAssembler;
+
+    @Autowired
+    private PedidoInputDisassembler pedidoInputDisassembler;
+
     @GetMapping
-    public List<PedidoModel> listar() {
+    public List<PedidoResumoModel> listar() {
         List<Pedido> todosPedidos = pedidoRepository.findAll();
 
-        return pedidoModelAssembler.toCollectionModel(todosPedidos);
+        return pedidoResumoModelAssemblerModelAssembler.toCollectionModel(todosPedidos);
     }
 
     @GetMapping("/{pedidoId}")
@@ -43,5 +55,23 @@ public class PedidoController {
         Pedido pedido = emissaoPedidoService.buscarOuFalhar(pedidoId);
 
         return pedidoModelAssembler.toModel(pedido);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public PedidoModel adicionar(@Valid @RequestBody PedidoInput pedidoInput) {
+        try {
+            Pedido novoPedido = pedidoInputDisassembler.toDomainObject(pedidoInput);
+
+            // TODO pegar usuário autenticado
+            novoPedido.setCliente(new Usuario());
+            novoPedido.getCliente().setId(1L);
+
+            novoPedido = emissaoPedidoService.emitir(novoPedido);
+
+            return pedidoModelAssembler.toModel(novoPedido);
+        } catch (EntidadeNaoEncontradaException e) {
+            throw new NegocioException(e.getMessage(), e);
+        }
     }
 }

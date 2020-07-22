@@ -7,7 +7,9 @@ package com.example.algafoodapi.core.modelMapper;
 
 import com.example.algafoodapi.api.model.EnderecoModel;
 import com.example.algafoodapi.api.model.RestauranteModel;
+import com.example.algafoodapi.api.model.input.ItemPedidoInput;
 import com.example.algafoodapi.dominio.modelo.Endereco;
+import com.example.algafoodapi.dominio.modelo.ItemPedido;
 import com.example.algafoodapi.dominio.modelo.Restaurante;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
@@ -30,6 +32,9 @@ public class ModelMapperConfig {
         enderecoToEnderecoModelTypeMap.<String>addMapping(
                 enderecoSrc -> enderecoSrc.getCidade().getEstado().getNome(),
                 (enderecoModelDest, value) -> enderecoModelDest.getCidade().setEstado(value));
+
+        modelMapper.createTypeMap(ItemPedidoInput.class, ItemPedido.class)
+                .addMappings(mapper -> mapper.skip(ItemPedido::setId));
 
         return modelMapper;
     }
