@@ -5,14 +5,10 @@ package com.example.algafoodapi.dominio.service;
  *  @autor    : roberto
  */
 
-import com.example.algafoodapi.dominio.exception.NegocioException;
 import com.example.algafoodapi.dominio.modelo.Pedido;
-import com.example.algafoodapi.dominio.modelo.StatusPedido;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.OffsetDateTime;
 
 @Service
 public class FluxoPedidoService {
@@ -21,18 +17,22 @@ public class FluxoPedidoService {
     private EmissaoPedidoService emissaoPedidoService;
 
     @Transactional
-    public void confirmar(Long pedidoId){
-        Pedido pedido = emissaoPedidoService.buscarOuFalhar(pedidoId);
-        if (!pedido.getStatus().equals(StatusPedido.CRIADO)){
-            throw new NegocioException(
-                    String.format("Status do pedido %n não pode ser alterado de %s para %s",
-                            pedido.getId(),
-                            pedido.getStatus().getDescricao(),
-                            StatusPedido.CONFIRMADO.getDescricao()));
-        }
-        pedido.setStatus(StatusPedido.CONFIRMADO);
-        pedido.setDataConfirmacao(OffsetDateTime.now());
+    public void confirmar(String codigoPedido){
+        Pedido pedido = emissaoPedidoService.buscarOuFalhar(codigoPedido);
+        pedido.confirmar();
 
+    }
+
+    @Transactional
+    public void cancelar(String codigoPedido) {
+        Pedido pedido = emissaoPedidoService.buscarOuFalhar(codigoPedido);
+       pedido.cancelar();
+    }
+
+    @Transactional
+    public void entregar(String codigoPedido) {
+        Pedido pedido = emissaoPedidoService.buscarOuFalhar(codigoPedido);
+        pedido.entregar();
     }
 
 }

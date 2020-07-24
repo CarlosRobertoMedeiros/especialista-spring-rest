@@ -9,10 +9,12 @@ import com.example.algafoodapi.api.assembler.RestauranteInputDisassembler;
 import com.example.algafoodapi.api.assembler.RestauranteModelAssembler;
 import com.example.algafoodapi.api.model.RestauranteModel;
 import com.example.algafoodapi.api.model.input.RestauranteInput;
+import com.example.algafoodapi.api.model.view.RestauranteView;
 import com.example.algafoodapi.dominio.exception.*;
 import com.example.algafoodapi.dominio.modelo.Restaurante;
 import com.example.algafoodapi.dominio.repository.RestauranteRepository;
 import com.example.algafoodapi.dominio.service.CadastroRestauranteService;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -41,6 +43,7 @@ public class RestauranteController {
     @Autowired
     private RestauranteInputDisassembler restauranteInputDisassembler;
 
+    @JsonView(RestauranteView.Resumo.class)
     @GetMapping
     public List<RestauranteModel> listarTodos(){
         return  restauranteModelAssembler.toCollectionModel(restauranteRepository.findAll());

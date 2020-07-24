@@ -7,11 +7,11 @@ package com.example.algafoodapi.dominio.exception;
 
 public class PedidoNaoEncontradoException extends EntidadeNaoEncontradaException {
 
-    public PedidoNaoEncontradoException(String message) {
-        super(message);
-    }
+//    public PedidoNaoEncontradoException(String message) {
+//        super(message);
+//    }
 
-    public PedidoNaoEncontradoException(Long id) {
-        this(String.format("Não existe um pedido com código %d",id));
+    public PedidoNaoEncontradoException(String codigoPedido) {
+        super(String.format("Não existe um pedido com código %s",codigoPedido));
     }
 }
