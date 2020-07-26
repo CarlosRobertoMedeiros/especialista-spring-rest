@@ -5,6 +5,7 @@ package com.example.algafoodapi.api.model;
  *  @autor    : roberto
  */
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
 
+//@JsonFilter("pedidoFilter")
 @Setter
 @Getter
 public class PedidoResumoModel {

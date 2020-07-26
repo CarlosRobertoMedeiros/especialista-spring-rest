@@ -16,10 +16,10 @@ import java.math.BigDecimal;
 @Setter
 public class RestauranteModel {
 
-    @JsonView(RestauranteView.Resumo.class)
+    @JsonView({RestauranteView.Resumo.class, RestauranteView.ApenasNome.class})
     private Long id;
 
-    @JsonView(RestauranteView.Resumo.class)
+    @JsonView({RestauranteView.Resumo.class, RestauranteView.ApenasNome.class})
     private String nome;
 
     @JsonView(RestauranteView.Resumo.class)
