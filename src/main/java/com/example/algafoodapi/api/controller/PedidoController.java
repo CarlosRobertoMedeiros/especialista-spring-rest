@@ -16,7 +16,9 @@ import com.example.algafoodapi.dominio.exception.NegocioException;
 import com.example.algafoodapi.dominio.modelo.Pedido;
 import com.example.algafoodapi.dominio.modelo.Usuario;
 import com.example.algafoodapi.dominio.repository.PedidoRepository;
+import com.example.algafoodapi.dominio.repository.filter.PedidoFilter;
 import com.example.algafoodapi.dominio.service.EmissaoPedidoService;
+import com.example.algafoodapi.infraestrutura.repository.spec.PedidoSpec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -61,8 +63,8 @@ public class PedidoController {
 //    }
 
     @GetMapping
-    public List<PedidoResumoModel> listar() {
-        List<Pedido> todosPedidos = pedidoRepository.findAll();
+    public List<PedidoResumoModel> pesquisar(PedidoFilter filtro) {
+        List<Pedido> todosPedidos = pedidoRepository.findAll(PedidoSpec.usandoFiltro(filtro));
         return pedidoResumoModelAssemblerModelAssembler.toCollectionModel(todosPedidos);
     }
 

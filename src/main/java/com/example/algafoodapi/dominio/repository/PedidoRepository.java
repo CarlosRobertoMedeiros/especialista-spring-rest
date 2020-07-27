@@ -6,12 +6,14 @@ package com.example.algafoodapi.dominio.repository;
  */
 
 import com.example.algafoodapi.dominio.modelo.Pedido;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface PedidoRepository extends CustomJpaRepository<Pedido, Long> {
+public interface PedidoRepository extends CustomJpaRepository<Pedido, Long>,
+        JpaSpecificationExecutor<Pedido> {
 
     //@Query("from Pedido  where codigo = :codigo")
     Optional<Pedido> findByCodigo(String codigo);
