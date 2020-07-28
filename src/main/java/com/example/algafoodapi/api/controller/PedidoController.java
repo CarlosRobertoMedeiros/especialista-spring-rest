@@ -11,12 +11,13 @@ import com.example.algafoodapi.api.assembler.PedidoResumoModelAssembler;
 import com.example.algafoodapi.api.model.PedidoModel;
 import com.example.algafoodapi.api.model.PedidoResumoModel;
 import com.example.algafoodapi.api.model.input.PedidoInput;
+import com.example.algafoodapi.core.data.PageableTranslator;
 import com.example.algafoodapi.dominio.exception.EntidadeNaoEncontradaException;
 import com.example.algafoodapi.dominio.exception.NegocioException;
 import com.example.algafoodapi.dominio.modelo.Pedido;
 import com.example.algafoodapi.dominio.modelo.Usuario;
 import com.example.algafoodapi.dominio.repository.PedidoRepository;
-import com.example.algafoodapi.dominio.repository.filter.PedidoFilter;
+import com.example.algafoodapi.dominio.filter.PedidoFilter;
 import com.example.algafoodapi.dominio.service.EmissaoPedidoService;
 import com.example.algafoodapi.infraestrutura.repository.spec.PedidoSpec;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/pedidos")
@@ -69,6 +72,8 @@ public class PedidoController {
     @GetMapping
     public Page<PedidoResumoModel> pesquisar(PedidoFilter filtro,
                                              @PageableDefault(size = 10) Pageable pageable) {
+        pageable = traduzirPageable(pageable);
+
         Page<Pedido> pedidosPage = pedidoRepository.findAll(
                 PedidoSpec.usandoFiltro(filtro), pageable);
 
@@ -105,4 +110,20 @@ public class PedidoController {
             throw new NegocioException(e.getMessage(), e);
         }
     }
+
+    private Pageable traduzirPageable(Pageable apiPageable){
+        Map<String,String> mapeamento = new HashMap<>();
+        mapeamento.put("codigo","codigo");
+        mapeamento.put("subtotal","subtotal");
+        mapeamento.put("taxaFrete","taxaFrete");
+        mapeamento.put("valorTotal","valorTotal");
+        mapeamento.put("dataCriacao","dataCriacao");
+        mapeamento.put("restaurante.nome","restaurante.nome");
+        mapeamento.put("restaurante.id","restaurante.id");
+        mapeamento.put("cliente.id","cliente.id");
+        mapeamento.put("cliente.nome","cliente.nome");
+        return PageableTranslator.translate(apiPageable, mapeamento);
+    }
+
+
 }

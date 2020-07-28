@@ -1,4 +1,4 @@
-package com.example.algafoodapi.dominio.repository.filter;
+package com.example.algafoodapi.dominio.filter;
 /*
  *  @criado em: 27/07/2020 - {08:35}
  *  @projeto  : algafood-api

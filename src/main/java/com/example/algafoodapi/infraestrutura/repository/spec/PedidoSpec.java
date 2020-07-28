@@ -6,7 +6,7 @@ package com.example.algafoodapi.infraestrutura.repository.spec;
  */
 
 import com.example.algafoodapi.dominio.modelo.Pedido;
-import com.example.algafoodapi.dominio.repository.filter.PedidoFilter;
+import com.example.algafoodapi.dominio.filter.PedidoFilter;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Predicate;
