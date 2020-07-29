@@ -1,4 +1,4 @@
-package com.example.algafoodapi.infraestrutura.service;
+package com.example.algafoodapi.infraestrutura.service.query;
 /*
  *  @criado em: 28/07/2020 - {06:30}
  *  @projeto  : algafood-api
@@ -26,17 +26,19 @@ public class VendaQueryServiceImpl implements VendaQueryService {
     private EntityManager manager;
 
     @Override
-    public List<VendaDiaria> consultarVendasDiarias(VendaDiariaFilter filtro) {
+    public List<VendaDiaria> consultarVendasDiarias(VendaDiariaFilter filtro,String timeOffSet) {
 
         CriteriaBuilder builder = manager.getCriteriaBuilder();
         CriteriaQuery<VendaDiaria> query = builder.createQuery(VendaDiaria.class);
         Root<Pedido> root = query.from(Pedido.class);
         ArrayList<Predicate> predicates = new ArrayList<Predicate>();
 
-        Expression<?> functionConvertTzDataCriacao = builder.function("convert_tz", Date.class, root.get("dataCriacao"),
-                builder.literal("+00:00"), builder.literal(NativeDate.getTimezoneOffset(this)));
+        Expression<?> functionConvertTzDataCriacao = builder.function("convert_tz", Date.class,
+                root.get("dataCriacao"),
+                builder.literal("+00:00"),
+                builder.literal(timeOffSet));
 
-        Expression<?> functionDateDataCriacao = builder.function("date", Date.class, root.get("dataCriacao"));
+        Expression<?> functionDateDataCriacao = builder.function("date", Date.class, functionConvertTzDataCriacao);
 
 
         Selection selection =  builder.construct(VendaDiaria.class,
