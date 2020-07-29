@@ -8,11 +8,18 @@ package com.example.algafoodapi.api.controller;
 import com.example.algafoodapi.dominio.filter.VendaDiariaFilter;
 import com.example.algafoodapi.dominio.modelo.dto.VendaDiaria;
 import com.example.algafoodapi.dominio.service.VendaQueryService;
+import com.example.algafoodapi.dominio.service.VendaReportService;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.awt.*;
 import java.util.List;
 
 @RestController
@@ -22,9 +29,28 @@ public class EstatisticasController {
     @Autowired
     private VendaQueryService vendaQueryService;
 
-    @GetMapping("/vendas-diarias")
-    public List<VendaDiaria> consultarVendasDiarias(VendaDiariaFilter filtro){
-        return vendaQueryService.consultarVendasDiarias(filtro);
+    @Autowired
+    private VendaReportService vendaReportService;
+
+    @GetMapping(value="/vendas-diarias", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<VendaDiaria> consultarVendasDiarias(VendaDiariaFilter filtro,
+                                                    @RequestParam(required = false, defaultValue = "+00:00") String timeOffSet){
+        return vendaQueryService.consultarVendasDiarias(filtro,timeOffSet) ;
+    }
+
+    @GetMapping(value= "/vendas-diarias", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> consultarVendasDiariasPDF(VendaDiariaFilter filtro,
+                                                                 @RequestParam(required = false, defaultValue = "+00:00") String timeOffSet) throws JRException {
+        byte[] bytesPdf = vendaReportService.emitirVendasDiarias(filtro,timeOffSet);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION,"attachment;filename=vendas-diarias.pdf"); //Fazer Download
+
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .headers(headers)
+                .body(bytesPdf);
     }
 
 }
