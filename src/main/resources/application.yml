@@ -22,6 +22,13 @@ spring:
   resources:
     add-mappings: false
 
+  #Confinguração de Tamanho de envio de envio de arquivo
+  # e tamanho máximo para a requisição
+  #servlet:
+  #  multipart:
+  #    max-file-size: 20KB
+  #    max-request-size: 20MB
+
 
 
 
