@@ -5,6 +5,7 @@ package com.example.algafoodapi.dominio.service;
  *  @autor    : roberto
  */
 
+import com.example.algafoodapi.dominio.exception.FotoProdutoNaoEncontradoException;
 import com.example.algafoodapi.dominio.modelo.FotoProduto;
 import com.example.algafoodapi.dominio.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +25,27 @@ public class CatalogoFotoProdutoService {
     @Autowired
     private FotoStorageService fotoStorageService;
 
+    public FotoProduto buscarOuFalhar(Long restauranteId, Long produtoId) {
+        return produtoRepository.findFotoById(restauranteId, produtoId)
+                .orElseThrow(() -> new FotoProdutoNaoEncontradoException(restauranteId, produtoId));
+    }
 
     @Transactional
     public FotoProduto salvar(FotoProduto foto, InputStream dadosArquivo){
         Long restauranteId = foto.getRestauranteId();
         Long produtoId = foto.getProduto().getId();
+        String nomeNovoArquivo = fotoStorageService.gerarNomeArquivo(foto.getNomeArquivo());
+        String nomeArquivoExistente = null;
 
         Optional<FotoProduto> fotoExistente = produtoRepository
                 .findFotoById(restauranteId,produtoId);
+
         if(fotoExistente.isPresent()){
+            nomeArquivoExistente = fotoExistente.get().getNomeArquivo();
             produtoRepository.delete(fotoExistente.get());
         }
+
+        foto.setNomeArquivo(nomeNovoArquivo);
         foto =  produtoRepository.save(foto);
         produtoRepository.flush();
 
@@ -43,7 +54,7 @@ public class CatalogoFotoProdutoService {
                 .inputStream(dadosArquivo)
                 .build();
 
-        fotoStorageService.armazenar(novaFoto);
+        fotoStorageService.substituir(nomeArquivoExistente, novaFoto);
 
         return foto;
 

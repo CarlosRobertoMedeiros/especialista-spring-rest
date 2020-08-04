@@ -30,10 +30,10 @@ spring:
   #    max-request-size: 20MB
 
   #Local de Armazenamento de Fotos local
-  algafood:
-    storage:
-      local:
-        diretorio-fotos: /home/roberto/Área de Trabalho/catalogo
+algafood:
+  storage:
+    local:
+      diretorio-fotos: /home/roberto/Área de Trabalho/catalogo
 
 
 
