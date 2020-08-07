@@ -35,6 +35,17 @@ algafood:
     local:
       diretorio-fotos: /home/roberto/Área de Trabalho/catalogo
 
+    #Configurações da Amazon Cloud S3
+    s3:
+      #id-chave-acesso: //retirado por segurança
+      #chave-acesso-secreta: //retirado por segurança
+      bucket: algafood.roberto.aws.s3
+      regiao: us-east-1
+      diretorio-fotos: catalogo
+
+
+
+
 
 
 
