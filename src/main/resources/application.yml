@@ -32,13 +32,14 @@ spring:
   #Local de Armazenamento de Fotos local
 algafood:
   storage:
+    tipo: local
     local:
       diretorio-fotos: /home/roberto/Área de Trabalho/catalogo
 
     #Configurações da Amazon Cloud S3
     s3:
-      #id-chave-acesso: //retirado por segurança
-      #chave-acesso-secreta: //retirado por segurança
+      id-chave-acesso: #id-chave-acesso
+      chave-acesso-secreta: #chave-acesso-secreta
       bucket: algafood.roberto.aws.s3
       regiao: us-east-1
       diretorio-fotos: catalogo
