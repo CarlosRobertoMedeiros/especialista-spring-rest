@@ -16,10 +16,22 @@ public class FluxoPedidoService {
     @Autowired
     private EmissaoPedidoService emissaoPedidoService;
 
+    @Autowired
+    private EnvioEmailService envioEmailService;
+
     @Transactional
     public void confirmar(String codigoPedido){
         Pedido pedido = emissaoPedidoService.buscarOuFalhar(codigoPedido);
         pedido.confirmar();
+
+        EnvioEmailService.Mensagem mensagem =  EnvioEmailService.Mensagem.builder()
+                .assunto(pedido.getRestaurante().getNome()+ " - Pedido confirmado")
+                .corpo("pedido-confirmado.html")
+                .variavel("pedido",pedido)
+                .destinatario(pedido.getCliente().getEmail()).build();
+
+        envioEmailService.enviar(mensagem);
+
 
     }
 

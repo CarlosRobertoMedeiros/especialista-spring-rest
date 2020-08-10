@@ -93,7 +93,9 @@ insert into tb_usuario (id, nome, email, senha, data_cadastro) values
 (2, 'Maria Joaquina', 'maria.vnd@algafood.com', '123', utc_timestamp),
 (3, 'José Souza', 'jose.aux@algafood.com', '123', utc_timestamp),
 (4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '123', utc_timestamp),
-(5, 'Manoel Lima', 'manoel.loja@gmail.com', '123', utc_timestamp);
+(5, 'Manoel Lima', 'manoel.loja@gmail.com', '123', utc_timestamp),
+(6, 'Débora Mendonça', 'email.teste.aw+debora@gmail.com', '123', utc_timestamp),
+(7, 'Carlos Lima', 'carlosmedeiroslima1981@gmail.com', '123', utc_timestamp);
 
 #Inserindo os dados na tabela Grupo_Permissoes
 insert into tb_grupo_permissao (grupo_id, permissao_id) values (1, 1), (1, 2), (2, 1), (2, 2), (3, 1);
@@ -108,7 +110,7 @@ insert into tb_restaurante_usuario_responsavel (restaurante_id, usuario_id) valu
 insert into tb_pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep,
                        endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
                        status, data_criacao, subtotal, taxa_frete, valor_total)
-values (1, 'ffefbad5-4dac-465c-92f5-80b0f4340d39' , 1, 1, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801', 'Brasil',
+values (1, 'ffefbad5-4dac-465c-92f5-80b0f4340d39' , 1, 7, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801', 'Brasil',
                        'CRIADO', utc_timestamp, 298.90, 10, 308.90);
 
 insert into tb_pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep,
@@ -126,13 +128,13 @@ values (3, 'b5741512-8fbc-47fa-9ac1-b530354fc0ff', 1, 1, 1, 1, '38400-222', 'Rua
 insert into tb_pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep,
                     endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
 	                status, data_criacao, data_confirmacao, data_entrega, subtotal, taxa_frete, valor_total)
-values (4, '5c621c9a-ba61-4454-8631-8aabefe58dc2', 1, 2, 1, 1, '38400-800', 'Rua Fortaleza', '900', 'Apto 504', 'Centro',
+values (4, '5c621c9a-ba61-4454-8631-8aabefe58dc2', 1, 7, 1, 1, '38400-800', 'Rua Fortaleza', '900', 'Apto 504', 'Centro',
         'ENTREGUE', '2019-11-02 20:34:04', '2019-11-02 20:35:10', '2019-11-02 21:10:32', 174.4, 5, 179.4);
 
 insert into tb_pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep,
                     endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
 	                status, data_criacao, data_confirmacao, data_entrega, subtotal, taxa_frete, valor_total)
-values (5, '8d774bcf-b238-42f3-aef1-5fb388754d63', 1, 3, 2, 1, '38400-200', 'Rua 10', '930', 'Casa 20', 'Martins',
+values (5, '8d774bcf-b238-42f3-aef1-5fb388754d63', 1, 7, 2, 1, '38400-200', 'Rua 10', '930', 'Casa 20', 'Martins',
         'ENTREGUE', '2019-11-03 02:00:30', '2019-11-03 02:01:21', '2019-11-03 03:20:10', 87.2, 10, 97.2);
 
 

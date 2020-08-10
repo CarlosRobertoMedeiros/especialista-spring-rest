@@ -22,12 +22,21 @@ spring:
   resources:
     add-mappings: false
 
+  #Configuração para Envio de Email
+  mail:
+    host: smtp.sendgrid.net
+    port: 587
+    username: apikey
+    #password:
+
+
   #Confinguração de Tamanho de envio de envio de arquivo
   # e tamanho máximo para a requisição
   #servlet:
   #  multipart:
   #    max-file-size: 20KB
   #    max-request-size: 20MB
+
 
   #Local de Armazenamento de Fotos local
 algafood:
@@ -43,6 +52,9 @@ algafood:
       bucket: algafood.roberto.aws.s3
       regiao: us-east-1
       diretorio-fotos: catalogo
+
+  email:
+    remetente: AlgaFood <carlosmedeiroslima@gmail.com>
 
 
 
