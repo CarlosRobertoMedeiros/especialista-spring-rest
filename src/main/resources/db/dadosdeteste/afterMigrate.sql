@@ -95,7 +95,7 @@ insert into tb_usuario (id, nome, email, senha, data_cadastro) values
 (4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '123', utc_timestamp),
 (5, 'Manoel Lima', 'manoel.loja@gmail.com', '123', utc_timestamp),
 (6, 'Débora Mendonça', 'email.teste.aw+debora@gmail.com', '123', utc_timestamp),
-(7, 'Carlos Lima', 'carlosmedeiroslima1981@gmail.com', '123', utc_timestamp);
+(7, 'Carlos Lima', 'carlosmedeiroslima@gmail.com', '123', utc_timestamp);
 
 #Inserindo os dados na tabela Grupo_Permissoes
 insert into tb_grupo_permissao (grupo_id, permissao_id) values (1, 1), (1, 2), (2, 1), (2, 2), (3, 1);

@@ -6,6 +6,7 @@ package com.example.algafoodapi.dominio.service;
  */
 
 import com.example.algafoodapi.dominio.modelo.Pedido;
+import com.example.algafoodapi.dominio.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,28 +18,23 @@ public class FluxoPedidoService {
     private EmissaoPedidoService emissaoPedidoService;
 
     @Autowired
-    private EnvioEmailService envioEmailService;
+    private PedidoRepository pedidoRepository;
 
     @Transactional
     public void confirmar(String codigoPedido){
         Pedido pedido = emissaoPedidoService.buscarOuFalhar(codigoPedido);
         pedido.confirmar();
 
-        EnvioEmailService.Mensagem mensagem =  EnvioEmailService.Mensagem.builder()
-                .assunto(pedido.getRestaurante().getNome()+ " - Pedido confirmado")
-                .corpo("pedido-confirmado.html")
-                .variavel("pedido",pedido)
-                .destinatario(pedido.getCliente().getEmail()).build();
-
-        envioEmailService.enviar(mensagem);
-
+        pedidoRepository.save(pedido); //Exigência do Spring para poder registrar um evento
 
     }
 
     @Transactional
     public void cancelar(String codigoPedido) {
         Pedido pedido = emissaoPedidoService.buscarOuFalhar(codigoPedido);
-       pedido.cancelar();
+        pedido.cancelar();
+
+        pedidoRepository.save(pedido); //Exigência do Spring para poder registrar um evento
     }
 
     @Transactional

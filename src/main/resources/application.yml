@@ -29,6 +29,11 @@ spring:
     username: apikey
     #password:
 
+  #Configuração de Locale Que vai substituir . por /
+  freemarker:
+    settings:
+      locale: pt_BR
+
 
   #Confinguração de Tamanho de envio de envio de arquivo
   # e tamanho máximo para a requisição
@@ -54,7 +59,10 @@ algafood:
       diretorio-fotos: catalogo
 
   email:
-    remetente: AlgaFood <carlosmedeiroslima@gmail.com>
+    remetente: AlgaFood <carlosmedeiroslima1981@gmail.com>
+    impl: fake
+    sandbox:
+      destinatario: teste@algafood.com.br
 
 
 
