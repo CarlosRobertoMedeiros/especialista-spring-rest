@@ -10,8 +10,10 @@ import java.util.TimeZone;
 public class AlgafoodApiApplication {
 
 	public static void main(String[] args) {
+
 		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 		SpringApplication.run(AlgafoodApiApplication.class, args);
+
 	}
 
 }
