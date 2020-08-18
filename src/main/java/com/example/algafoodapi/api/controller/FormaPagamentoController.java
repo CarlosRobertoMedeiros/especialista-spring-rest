@@ -17,8 +17,11 @@ import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.filter.ShallowEtagHeaderFilter;
 
 import javax.validation.Valid;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -39,25 +42,58 @@ public class FormaPagamentoController {
     private FormaPagamentoInputDisassembler formaPagamentoInputDisassembler;
 
     @GetMapping
-    public ResponseEntity<List<FormaPagamentoModel>> listar() {
+    public ResponseEntity<List<FormaPagamentoModel>> listar(ServletWebRequest request) {
+
+        //Tem que desabilitar o shallow para implementar o deepTag
+        ShallowEtagHeaderFilter.disableContentCaching(request.getRequest());
+
+        String eTag ="0";
+
+        OffsetDateTime dataUltimaAtualizacao = formaPagamentoRepository.getDataUltimaAtualizacao();
+
+        if(dataUltimaAtualizacao!=null){
+            eTag =  String.valueOf(dataUltimaAtualizacao.toEpochSecond());
+        }
+
+        //já temos condições de saber se continuamos ou não o processamento
+        if (request.checkNotModified(eTag)){
+            return  null;
+        }
+
         List<FormaPagamento> todasFormasPagamentos = formaPagamentoRepository.findAll();
         List<FormaPagamentoModel> formasPagamentosModel = formaPagamentoModelAssembler
                 .toCollectionModel(todasFormasPagamentos);
 
         return  ResponseEntity.ok()
-                .cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))
+                .cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS).cachePublic())
+                .eTag(eTag)
                 .body(formasPagamentosModel);
 
     }
 
     @GetMapping("/{formaPagamentoId}")
-    public ResponseEntity<FormaPagamentoModel> buscar(@PathVariable Long formaPagamentoId) {
+    public ResponseEntity<FormaPagamentoModel> buscar(@PathVariable Long formaPagamentoId, ServletWebRequest request) {
+
+        ShallowEtagHeaderFilter.disableContentCaching(request.getRequest());
+        String eTag = "0";
+
+        OffsetDateTime dataAtualizacao = formaPagamentoRepository
+                .getDataAtualizacaoById(formaPagamentoId);
+
+        if (dataAtualizacao != null) {
+            eTag = String.valueOf(dataAtualizacao.toEpochSecond());
+        }
+
+        if (request.checkNotModified(eTag)) {
+            return null;
+        }
+
         FormaPagamento formaPagamento = formaPagamentoService.buscarOuFalhar(formaPagamentoId);
 
         FormaPagamentoModel formaPagamentoModel = formaPagamentoModelAssembler.toModel(formaPagamento);
 
         return  ResponseEntity.ok()
-                .cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))
+                .cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS).cachePublic())
                 .body(formaPagamentoModel);
     }
 

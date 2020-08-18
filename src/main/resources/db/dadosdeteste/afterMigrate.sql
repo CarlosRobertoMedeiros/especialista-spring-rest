@@ -54,9 +54,9 @@ insert into tb_cidade (nome, id_estado) values ('Campinas', 2);
 insert into tb_cidade (nome, id_estado) values ('Fortaleza', 3);
 
 #Inserindo Dados na Forma de Pagamento
-insert into tb_forma_pagamento (descricao) values ('Cartão de crédito');
-insert into tb_forma_pagamento (descricao) values ('Cartão de débito');
-insert into tb_forma_pagamento (descricao) values ('Dinheiro');
+insert into tb_forma_pagamento (descricao,data_atualizacao) values ('Cartão de crédito',utc_timestamp);
+insert into tb_forma_pagamento (descricao,data_atualizacao) values ('Cartão de débito',utc_timestamp);
+insert into tb_forma_pagamento (descricao,data_atualizacao) values ('Dinheiro',utc_timestamp);
 
 #Inserindo Dados de Restaurante
 insert into tb_restaurante (nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao ,ativo, aberto ) values ('Thai Delivery', 9.50 , 2, utc_timestamp, utc_timestamp, true,true);
