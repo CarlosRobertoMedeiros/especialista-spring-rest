@@ -7,6 +7,7 @@ package com.example.algafoodapi.api.controller;
 
 import com.example.algafoodapi.api.assembler.GrupoInputDisassembler;
 import com.example.algafoodapi.api.assembler.GrupoModelAssembler;
+import com.example.algafoodapi.api.controller.openapi.GrupoControllerOpenApi;
 import com.example.algafoodapi.api.model.GrupoModel;
 import com.example.algafoodapi.api.model.input.GrupoInput;
 import com.example.algafoodapi.dominio.modelo.Grupo;
@@ -14,14 +15,15 @@ import com.example.algafoodapi.dominio.repository.GrupoRepository;
 import com.example.algafoodapi.dominio.service.CadastroGrupoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/grupos")
-public class GrupoController {
+@RequestMapping(path = "/grupos", produces = MediaType.APPLICATION_JSON_VALUE)
+public class GrupoController implements GrupoControllerOpenApi {
 
     @Autowired
     private GrupoRepository grupoRepository;

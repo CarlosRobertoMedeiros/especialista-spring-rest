@@ -6,11 +6,13 @@ package com.example.algafoodapi.core.openapi;
  */
 
 import com.example.algafoodapi.api.exceptionhandler.Problem;
+import com.example.algafoodapi.core.openapi.model.PageableModelOpenAPI;
 import com.fasterxml.classmate.TypeResolver;
 import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -20,6 +22,7 @@ import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.builders.ResponseMessageBuilder;
+import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.service.ResponseMessage;
@@ -54,8 +57,10 @@ public class SpringFoxConfig implements WebMvcConfigurer {
                     .globalResponseMessage(RequestMethod.PUT, globalPostPutResponseMessages())
                     .globalResponseMessage(RequestMethod.DELETE, globalDeleteResponseMessages())
                     .additionalModels(typeResolver.resolve(Problem.class))
+                    .directModelSubstitute(Pageable.class, PageableModelOpenAPI.class)
                     .apiInfo(apiInfo())
-                    .tags(new Tag("Cidades","Gerencia as Cidades"));
+                    .tags(new Tag("Cidades","Gerencia as Cidades"),
+                          new Tag("Grupos","Gerencia os Grupos de Usuários"));
 
     }
 
@@ -63,6 +68,7 @@ public class SpringFoxConfig implements WebMvcConfigurer {
         return Arrays.asList(
                 new ResponseMessageBuilder()
                     .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    .responseModel(new ModelRef("Problema")) //Esse nome é o @ApiModel("Problema") da classe Problem
                     .message("Erro Interno do servidor")
                     .build(),
 
@@ -78,9 +84,11 @@ public class SpringFoxConfig implements WebMvcConfigurer {
                 new ResponseMessageBuilder()
                         .code(HttpStatus.BAD_REQUEST.value())
                         .message("Requisição inválida (erro do cliente)")
+                        .responseModel(new ModelRef("Problema")) //Esse nome é o @ApiModel("Problema") da classe Problem
                         .build(),
                 new ResponseMessageBuilder()
                         .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                        .responseModel(new ModelRef("Problema")) //Esse nome é o @ApiModel("Problema") da classe Problem
                         .message("Erro interno no servidor")
                         .build(),
                 new ResponseMessageBuilder()
@@ -89,6 +97,7 @@ public class SpringFoxConfig implements WebMvcConfigurer {
                         .build(),
                 new ResponseMessageBuilder()
                         .code(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value())
+                        .responseModel(new ModelRef("Problema")) //Esse nome é o @ApiModel("Problema") da classe Problem
                         .message("Requisição recusada porque o corpo está em um formato não suportado")
                         .build()
         );
@@ -98,10 +107,12 @@ public class SpringFoxConfig implements WebMvcConfigurer {
         return Arrays.asList(
                 new ResponseMessageBuilder()
                         .code(HttpStatus.BAD_REQUEST.value())
+                        .responseModel(new ModelRef("Problema")) //Esse nome é o @ApiModel("Problema") da classe Problem
                         .message("Requisição inválida (erro do cliente)")
                         .build(),
                 new ResponseMessageBuilder()
                         .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                        .responseModel(new ModelRef("Problema")) //Esse nome é o @ApiModel("Problema") da classe Problem
                         .message("Erro interno no servidor")
                         .build()
         );
