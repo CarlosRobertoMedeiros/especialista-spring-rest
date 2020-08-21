@@ -4,6 +4,7 @@ package com.example.algafoodapi.api.model;/*
  *  @autor    : roberto
  */
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,10 +12,20 @@ import lombok.Setter;
 @Setter
 public class EnderecoModel {
 
+    @ApiModelProperty(example = "70000-000")
     private String cep;
+
+    @ApiModelProperty(example = "SQN")
     private String logradouro;
+
+    @ApiModelProperty(example = "402")
     private String numero;
+
+    @ApiModelProperty(example = "Bloco Z Apt X")
     private String complemento;
+
+    @ApiModelProperty(example = "Asa Norte")
     private String bairro;
+
     private CidadeResumoModel cidade;
 }

@@ -7,8 +7,7 @@ package com.example.algafoodapi.api.controller;
 
 import com.example.algafoodapi.api.assembler.CidadeInputDisassembler;
 import com.example.algafoodapi.api.assembler.CidadeModelAssembler;
-import com.example.algafoodapi.api.controller.openapi.CidadeControllerOpenApi;
-import com.example.algafoodapi.api.exceptionhandler.Problem;
+import com.example.algafoodapi.api.openapi.controller.CidadeControllerOpenApi;
 import com.example.algafoodapi.api.model.CidadeModel;
 import com.example.algafoodapi.api.model.input.CidadeInput;
 import com.example.algafoodapi.dominio.exception.EstadoNaoEncontradoException;
@@ -16,8 +15,6 @@ import com.example.algafoodapi.dominio.exception.NegocioException;
 import com.example.algafoodapi.dominio.modelo.Cidade;
 import com.example.algafoodapi.dominio.repository.CidadeRepository;
 import com.example.algafoodapi.dominio.service.CadastroCidadeService;
-import io.swagger.annotations.*;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

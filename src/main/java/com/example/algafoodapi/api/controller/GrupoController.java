@@ -7,7 +7,7 @@ package com.example.algafoodapi.api.controller;
 
 import com.example.algafoodapi.api.assembler.GrupoInputDisassembler;
 import com.example.algafoodapi.api.assembler.GrupoModelAssembler;
-import com.example.algafoodapi.api.controller.openapi.GrupoControllerOpenApi;
+import com.example.algafoodapi.api.openapi.controller.GrupoControllerOpenApi;
 import com.example.algafoodapi.api.model.GrupoModel;
 import com.example.algafoodapi.api.model.input.GrupoInput;
 import com.example.algafoodapi.dominio.modelo.Grupo;

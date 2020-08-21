@@ -1,4 +1,4 @@
-package com.example.algafoodapi.api.controller.openapi;
+package com.example.algafoodapi.api.openapi.controller;
 /*
  *  @criado em: 20/08/2020 - {09:02}
  *  @projeto  : algafood-api

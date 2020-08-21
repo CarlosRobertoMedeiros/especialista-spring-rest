@@ -9,6 +9,7 @@ import com.example.algafoodapi.api.assembler.CozinhaInputDisassembler;
 import com.example.algafoodapi.api.assembler.CozinhaModelAssembler;
 import com.example.algafoodapi.api.model.CozinhaModel;
 import com.example.algafoodapi.api.model.input.CozinhaInput;
+import com.example.algafoodapi.api.openapi.controller.CozinhaControllerOpenApi;
 import com.example.algafoodapi.dominio.exception.EntidadeNaoEncontradaException;
 import com.example.algafoodapi.dominio.modelo.Cozinha;
 import com.example.algafoodapi.dominio.repository.CozinhaRepository;
@@ -30,7 +31,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value= "/cozinhas", produces = MediaType.APPLICATION_JSON_VALUE)
-public class CozinhaController {
+public class CozinhaController implements CozinhaControllerOpenApi {
 
     @Autowired
     private CozinhaRepository cozinhaRepository;
