@@ -10,11 +10,16 @@ import com.example.algafoodapi.api.assembler.RestauranteModelAssembler;
 import com.example.algafoodapi.api.model.RestauranteModel;
 import com.example.algafoodapi.api.model.input.RestauranteInput;
 import com.example.algafoodapi.api.model.view.RestauranteView;
+import com.example.algafoodapi.api.openapi.controller.RestauranteControllerOpenApi;
+import com.example.algafoodapi.api.openapi.model.RestauranteBasicoModelOpenApi;
 import com.example.algafoodapi.dominio.exception.*;
 import com.example.algafoodapi.dominio.modelo.Restaurante;
 import com.example.algafoodapi.dominio.repository.RestauranteRepository;
 import com.example.algafoodapi.dominio.service.CadastroRestauranteService;
 import com.fasterxml.jackson.annotation.JsonView;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,8 +31,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/restaurantes" , produces = MediaType.APPLICATION_JSON_VALUE)
-public class RestauranteController {
+@RequestMapping(path = "/restaurantes" , produces = MediaType.APPLICATION_JSON_VALUE)
+public class RestauranteController implements RestauranteControllerOpenApi{
 
     @Autowired
     private RestauranteRepository restauranteRepository;
@@ -60,12 +65,18 @@ public class RestauranteController {
 //        return restaurantesWrapper;
 //    }
 
+    @ApiOperation(value = "Lista restaurantes", response = RestauranteBasicoModelOpenApi.class)
+    @ApiImplicitParams({
+       @ApiImplicitParam(value="Nome da projeção de pedidos", allowableValues = "apenas-nome",
+                         name = "projecao",paramType = "query", type = "string")
+    })
     @JsonView(RestauranteView.Resumo.class)
     @GetMapping
     public List<RestauranteModel> listarTodos(){
         return  restauranteModelAssembler.toCollectionModel(restauranteRepository.findAll());
     }
 
+    @ApiOperation(value = "Lista restaurantes", hidden = true)
     @JsonView(RestauranteView.ApenasNome.class)
     @GetMapping(params = "projecao=apenas-nome")
     public List<RestauranteModel> listarApenasNome(){

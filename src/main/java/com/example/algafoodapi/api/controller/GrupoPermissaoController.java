@@ -7,17 +7,20 @@ package com.example.algafoodapi.api.controller;
 
 import com.example.algafoodapi.api.assembler.PermissaoModelAssembler;
 import com.example.algafoodapi.api.model.PermissaoModel;
+import com.example.algafoodapi.api.openapi.controller.GrupoPermissaoControllerOpenApi;
 import com.example.algafoodapi.dominio.modelo.Grupo;
 import com.example.algafoodapi.dominio.service.CadastroGrupoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/grupos/{grupoId}/permissoes")
-public class GrupoPermissaoController {
+@RequestMapping(path = "/grupos/{grupoId}/permissoes",
+        produces = MediaType.APPLICATION_JSON_VALUE)
+public class GrupoPermissaoController implements GrupoPermissaoControllerOpenApi {
 
     @Autowired
     private CadastroGrupoService grupoService;

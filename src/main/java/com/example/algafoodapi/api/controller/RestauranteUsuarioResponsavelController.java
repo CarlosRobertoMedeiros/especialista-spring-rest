@@ -7,17 +7,20 @@ package com.example.algafoodapi.api.controller;
 
 import com.example.algafoodapi.api.assembler.UsuarioModelAssembler;
 import com.example.algafoodapi.api.model.UsuarioModel;
+import com.example.algafoodapi.api.openapi.controller.RestauranteUsuarioResponsavelControllerOpenApi;
 import com.example.algafoodapi.dominio.modelo.Restaurante;
 import com.example.algafoodapi.dominio.service.CadastroRestauranteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/restaurantes/{restauranteId}/responsaveis")
-public class RestauranteUsuarioResponsavelController {
+@RequestMapping(path = "/restaurantes/{restauranteId}/responsaveis",
+        produces = MediaType.APPLICATION_JSON_VALUE)
+public class RestauranteUsuarioResponsavelController implements RestauranteUsuarioResponsavelControllerOpenApi {
 
     @Autowired
     private CadastroRestauranteService restauranteService;

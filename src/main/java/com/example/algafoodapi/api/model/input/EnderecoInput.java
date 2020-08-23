@@ -26,7 +26,7 @@ public class EnderecoInput {
     @NotBlank
     private String logradouro;
 
-    @ApiModelProperty(example = "402", required = true)
+    @ApiModelProperty(example = "\"402\"", required = true)
     @NotBlank
     private String numero;
 

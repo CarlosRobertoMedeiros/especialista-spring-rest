@@ -11,6 +11,7 @@ import com.example.algafoodapi.api.assembler.PedidoResumoModelAssembler;
 import com.example.algafoodapi.api.model.PedidoModel;
 import com.example.algafoodapi.api.model.PedidoResumoModel;
 import com.example.algafoodapi.api.model.input.PedidoInput;
+import com.example.algafoodapi.api.openapi.controller.FluxoPedidoControllerOpenApi;
 import com.example.algafoodapi.dominio.exception.EntidadeNaoEncontradaException;
 import com.example.algafoodapi.dominio.exception.NegocioException;
 import com.example.algafoodapi.dominio.modelo.Pedido;
@@ -20,14 +21,15 @@ import com.example.algafoodapi.dominio.service.EmissaoPedidoService;
 import com.example.algafoodapi.dominio.service.FluxoPedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/pedidos/{codigoPedido}")
-public class FluxoPedidoController {
+@RequestMapping(path = "/pedidos/{codigoPedido}", produces = MediaType.APPLICATION_JSON_VALUE)
+public class FluxoPedidoController implements FluxoPedidoControllerOpenApi {
 
     @Autowired
     private FluxoPedidoService fluxoPedidoService;

@@ -8,6 +8,7 @@ import com.example.algafoodapi.api.assembler.EstadoInputDisassembler;
 import com.example.algafoodapi.api.assembler.EstadoModelAssembler;
 import com.example.algafoodapi.api.model.EstadoModel;
 import com.example.algafoodapi.api.model.input.EstadoInput;
+import com.example.algafoodapi.api.openapi.controller.EstadoControllerOpenApi;
 import com.example.algafoodapi.dominio.exception.EntidadeEmUsoException;
 import com.example.algafoodapi.dominio.exception.EntidadeNaoEncontradaException;
 import com.example.algafoodapi.dominio.modelo.Estado;
@@ -16,6 +17,7 @@ import com.example.algafoodapi.dominio.service.CadastroEstadoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +27,8 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/estados")
-public class EstadoController {
+@RequestMapping(path = "/estados", produces = MediaType.APPLICATION_JSON_VALUE)
+public class EstadoController implements EstadoControllerOpenApi {
 
     private static final String MSG_ESTADO_NAO_ENCONTRADA = "Não existe um cadastro de estado com o código %d";
     private static final String MSG_ESTADO_EM_USO = "Estado de Código %d não pode ser removida, pois está em uso";

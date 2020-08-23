@@ -7,6 +7,7 @@ package com.example.algafoodapi.api.controller;
 
 import com.example.algafoodapi.api.assembler.FormaPagamentoModelAssembler;
 import com.example.algafoodapi.api.model.FormaPagamentoModel;
+import com.example.algafoodapi.api.openapi.controller.RestauranteFormaPagamentoControllerOpenApi;
 import com.example.algafoodapi.dominio.modelo.Restaurante;
 import com.example.algafoodapi.dominio.service.CadastroRestauranteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/restaurantes/{restauranteId}/formas-pagamento" , produces = MediaType.APPLICATION_JSON_VALUE)
-public class RestauranteFormaPagamentoController {
+public class RestauranteFormaPagamentoController implements RestauranteFormaPagamentoControllerOpenApi {
 
     @Autowired
     private CadastroRestauranteService restauranteService;

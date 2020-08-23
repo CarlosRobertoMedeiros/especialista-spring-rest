@@ -5,6 +5,7 @@ package com.example.algafoodapi.api.controller;
  *  @autor    : roberto
  */
 
+import com.example.algafoodapi.api.openapi.controller.EstatisticasControllerOpenApi;
 import com.example.algafoodapi.dominio.filter.VendaDiariaFilter;
 import com.example.algafoodapi.dominio.modelo.dto.VendaDiaria;
 import com.example.algafoodapi.dominio.service.VendaQueryService;
@@ -24,7 +25,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/estatisticas")
-public class EstatisticasController {
+public class EstatisticasController implements EstatisticasControllerOpenApi {
 
     @Autowired
     private VendaQueryService vendaQueryService;
