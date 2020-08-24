@@ -1,4 +1,4 @@
-package com.example.algafoodapi.core.openapi;
+package com.example.algafoodapi.core.springfox;
 /*
  *  @criado em: 18/08/2020 - {14:31}
  *  @projeto  : algafood-api
@@ -26,7 +26,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.*;
-import springfox.documentation.schema.AlternateTypeRule;
 import springfox.documentation.schema.AlternateTypeRules;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
