@@ -8,8 +8,8 @@ package com.example.algafoodapi.api.openapi.controller;
 import com.example.algafoodapi.api.exceptionhandler.Problem;
 import com.example.algafoodapi.api.model.UsuarioModel;
 import io.swagger.annotations.*;
-
-import java.util.List;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Api(tags = "Restaurantes")
 public interface RestauranteUsuarioResponsavelControllerOpenApi {
@@ -18,9 +18,7 @@ public interface RestauranteUsuarioResponsavelControllerOpenApi {
     @ApiResponses({
             @ApiResponse(code = 404, message = "Restaurante não encontrado", response = Problem.class)
     })
-    List<UsuarioModel> listar(
-            @ApiParam(value = "ID do restaurante", example = "1", required = true)
-                    Long restauranteId);
+    CollectionModel<UsuarioModel> listar(@PathVariable Long restauranteId);
 
     @ApiOperation("Desassociação de restaurante com usuário responsável")
     @ApiResponses({

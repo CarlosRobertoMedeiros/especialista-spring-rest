@@ -16,6 +16,7 @@ import com.example.algafoodapi.dominio.repository.EstadoRepository;
 import com.example.algafoodapi.dominio.service.CadastroEstadoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +47,7 @@ public class EstadoController implements EstadoControllerOpenApi {
     private EstadoInputDisassembler estadoInputDisassembler;
 
     @GetMapping
-    public List<EstadoModel> listar(){
+    public CollectionModel<EstadoModel> listar(){
         List<Estado> estados = estadoRepository.findAll();
         return estadoModelAssembler.toCollectionModel(estados);
     }

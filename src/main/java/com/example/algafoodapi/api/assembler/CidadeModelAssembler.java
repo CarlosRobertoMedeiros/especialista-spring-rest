@@ -5,6 +5,7 @@ package com.example.algafoodapi.api.assembler;
  *  @autor    : roberto
  */
 
+import com.example.algafoodapi.api.AlgaLinks;
 import com.example.algafoodapi.api.controller.CidadeController;
 import com.example.algafoodapi.api.controller.EstadoController;
 import com.example.algafoodapi.api.model.CidadeModel;
@@ -25,6 +26,9 @@ public class CidadeModelAssembler
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private AlgaLinks algaLinks;
+
     public CidadeModelAssembler(){
         super(CidadeController.class, CidadeModel.class);
     }
@@ -35,12 +39,8 @@ public class CidadeModelAssembler
 
         modelMapper.map(cidade,cidadeModel);
 
-        cidadeModel.add(linkTo(methodOn(CidadeController.class)
-                .listarTodas()).withRel("cidades"));
-
-        cidadeModel.getEstado().add(linkTo(methodOn(EstadoController.class)
-                .buscar(cidadeModel.getEstado().getId())).withSelfRel());
-
+        cidadeModel.add(algaLinks.linkToCidades("cidades"));
+        cidadeModel.getEstado().add(algaLinks.linkToEstado(cidadeModel.getEstado().getId()));
 
         return cidadeModel;
     }
@@ -51,3 +51,5 @@ public class CidadeModelAssembler
             .add(linkTo(CidadeController.class).withSelfRel());
     }
 }
+
+

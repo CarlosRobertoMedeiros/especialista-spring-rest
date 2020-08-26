@@ -5,35 +5,39 @@ package com.example.algafoodapi.api.controller;
  *  @autor    : roberto
  */
 
+
 import com.example.algafoodapi.api.assembler.PedidoInputDisassembler;
 import com.example.algafoodapi.api.assembler.PedidoModelAssembler;
 import com.example.algafoodapi.api.assembler.PedidoResumoModelAssembler;
 import com.example.algafoodapi.api.model.PedidoModel;
 import com.example.algafoodapi.api.model.PedidoResumoModel;
 import com.example.algafoodapi.api.model.input.PedidoInput;
+import com.example.algafoodapi.core.data.PageWrapper;
 import com.example.algafoodapi.core.data.PageableTranslator;
 import com.example.algafoodapi.dominio.exception.EntidadeNaoEncontradaException;
 import com.example.algafoodapi.dominio.exception.NegocioException;
+import com.example.algafoodapi.dominio.filter.PedidoFilter;
 import com.example.algafoodapi.dominio.modelo.Pedido;
 import com.example.algafoodapi.dominio.modelo.Usuario;
 import com.example.algafoodapi.dominio.repository.PedidoRepository;
-import com.example.algafoodapi.dominio.filter.PedidoFilter;
 import com.example.algafoodapi.dominio.service.EmissaoPedidoService;
-import com.example.algafoodapi.infraestrutura.repository.spec.PedidoSpec;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+
 import javax.validation.Valid;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+import com.example.algafoodapi.infraestrutura.repository.spec.PedidoSpec;
 
 @RestController
 @RequestMapping(value = "/pedidos")
@@ -49,10 +53,13 @@ public class PedidoController {
     private PedidoModelAssembler pedidoModelAssembler;
 
     @Autowired
-    private PedidoResumoModelAssembler pedidoResumoModelAssemblerModelAssembler;
+    private PedidoResumoModelAssembler pedidoResumoModelAssembler;
 
     @Autowired
     private PedidoInputDisassembler pedidoInputDisassembler;
+
+    @Autowired
+    private PagedResourcesAssembler<Pedido> pagedResourcesAssembler; //Mostra erro no Intelij porém, está certo
 
 //    @GetMapping
 //    public MappingJacksonValue listar(@RequestParam(required = false) String campos) {
@@ -75,21 +82,18 @@ public class PedidoController {
             @ApiImplicitParam(value = "Nomes das propriedades para filtrar na resposta, separados por virgula ",
                               name = "campos", paramType = "query", type = "string")
     })
+
     @GetMapping
-    public Page<PedidoResumoModel> pesquisar(PedidoFilter filtro,
-                                             @PageableDefault(size = 10) Pageable pageable) {
-        pageable = traduzirPageable(pageable);
+    public PagedModel<PedidoResumoModel> pesquisar(PedidoFilter filtro,
+                                                   @PageableDefault(size = 10) Pageable pageable) {
+        Pageable pageableTraduzido = traduzirPageable(pageable);
 
         Page<Pedido> pedidosPage = pedidoRepository.findAll(
-                PedidoSpec.usandoFiltro(filtro), pageable);
+                PedidoSpec.usandoFiltro(filtro), pageableTraduzido);
 
-        List<PedidoResumoModel> pedidosResumoModel = pedidoResumoModelAssemblerModelAssembler
-                .toCollectionModel(pedidosPage.getContent());
+        pedidosPage = new PageWrapper<>(pedidosPage,pageable);
 
-        Page<PedidoResumoModel> pedidosResumoModelPage = new PageImpl<>(
-                pedidosResumoModel, pageable, pedidosPage.getTotalElements());
-
-        return pedidosResumoModelPage;
+        return pagedResourcesAssembler.toModel(pedidosPage, pedidoResumoModelAssembler);
     }
 
     @ApiImplicitParams({
