@@ -21,11 +21,11 @@ import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSuppor
 public class CozinhaModel extends RepresentationModel<CozinhaModel> {
 
     @ApiModelProperty(example = "1")
-    @JsonView(RestauranteView.Resumo.class)
+//    @JsonView(RestauranteView.Resumo.class)
     private Long id;
 
     @ApiModelProperty(example = "Brasileira")
-    @JsonView(RestauranteView.Resumo.class)
+//    @JsonView(RestauranteView.Resumo.class)
     private String nome;
 
 }

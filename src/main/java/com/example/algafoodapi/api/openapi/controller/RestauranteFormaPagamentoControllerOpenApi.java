@@ -8,6 +8,7 @@ package com.example.algafoodapi.api.openapi.controller;
 import com.example.algafoodapi.api.exceptionhandler.Problem;
 import com.example.algafoodapi.api.model.FormaPagamentoModel;
 import io.swagger.annotations.*;
+import org.springframework.hateoas.CollectionModel;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface RestauranteFormaPagamentoControllerOpenApi {
     @ApiResponses({
             @ApiResponse(code = 404, message = "Restaurante não encontrado", response = Problem.class)
     })
-    List<FormaPagamentoModel> listarTodos(
+    CollectionModel<FormaPagamentoModel> listarTodos(
             @ApiParam(value = "ID do restaurante", example = "1", required = true)
                     Long restauranteId);
 
