@@ -14,6 +14,7 @@ import com.example.algafoodapi.dominio.modelo.Grupo;
 import com.example.algafoodapi.dominio.repository.GrupoRepository;
 import com.example.algafoodapi.dominio.service.CadastroGrupoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +39,7 @@ public class GrupoController implements GrupoControllerOpenApi {
     private GrupoInputDisassembler grupoInputDisassembler;
 
     @GetMapping
-    public List<GrupoModel> listar() {
+    public CollectionModel<GrupoModel> listar() {
         List<Grupo> todosGrupos = grupoRepository.findAll();
 
         return grupoModelAssembler.toCollectionModel(todosGrupos);
