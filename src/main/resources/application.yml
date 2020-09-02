@@ -64,11 +64,7 @@ algafood:
     sandbox:
       destinatario: teste@algafood.com.br
 
-
-
-
-
-
-
-
-
+#Compressão com Gzip
+server:
+  compression:
+    enabled: true

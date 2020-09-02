@@ -5,6 +5,7 @@ package com.example.algafoodapi.api.openapi.controller;
  *  @autor    : roberto
  */
 
+import com.example.algafoodapi.api.controller.EstatisticasController;
 import com.example.algafoodapi.dominio.filter.VendaDiariaFilter;
 import com.example.algafoodapi.dominio.modelo.dto.VendaDiaria;
 import io.swagger.annotations.*;
@@ -35,6 +36,9 @@ public interface EstatisticasControllerOpenApi {
     ResponseEntity<byte[]> consultarVendasDiariasPDF(
             VendaDiariaFilter filtro,
             String timeOffset) throws JRException;
+
+    @ApiOperation(value = "Estatísticas", hidden = true)
+    EstatisticasController.EstatisticasModel estatisticas();
 
 
 
