@@ -68,3 +68,4 @@ algafood:
 server:
   compression:
     enabled: true
+    mime-types: application/json

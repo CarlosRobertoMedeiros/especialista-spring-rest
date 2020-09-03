@@ -8,6 +8,7 @@ package com.example.algafoodapi.api.openapi.controller;
 import com.example.algafoodapi.api.exceptionhandler.Problem;
 import com.example.algafoodapi.api.model.FormaPagamentoModel;
 import com.example.algafoodapi.api.model.input.FormaPagamentoInput;
+import com.example.algafoodapi.api.openapi.model.FormasPagamentoModelOpenApi;
 import io.swagger.annotations.*;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ import java.util.List;
 @Api(tags = "Formas de pagamento")
 public interface FormaPagamentoControllerOpenApi {
 
-    @ApiOperation("Lista as formas de pagamento")
+    @ApiOperation(value = "Lista as formas de pagamento", response = FormasPagamentoModelOpenApi.class)
     public ResponseEntity<CollectionModel<FormaPagamentoModel>> listar(ServletWebRequest request);
 
     @ApiOperation("Busca uma forma de pagamento por ID")
