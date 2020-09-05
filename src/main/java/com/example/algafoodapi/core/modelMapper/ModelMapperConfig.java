@@ -5,12 +5,12 @@ package com.example.algafoodapi.core.modelMapper;
  *  @autor    : roberto
  */
 
-import com.example.algafoodapi.api.model.EnderecoModel;
-import com.example.algafoodapi.api.model.RestauranteModel;
-import com.example.algafoodapi.api.model.input.ItemPedidoInput;
+import com.example.algafoodapi.api.v1.model.EnderecoModel;
+import com.example.algafoodapi.api.v1.model.input.ItemPedidoInput;
+import com.example.algafoodapi.api.v2.model.input.CidadeInputV2;
+import com.example.algafoodapi.dominio.modelo.Cidade;
 import com.example.algafoodapi.dominio.modelo.Endereco;
 import com.example.algafoodapi.dominio.modelo.ItemPedido;
-import com.example.algafoodapi.dominio.modelo.Restaurante;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +23,8 @@ public class ModelMapperConfig {
     public ModelMapper modelMapper(){
         ModelMapper modelMapper = new ModelMapper();
 
+        modelMapper.createTypeMap(CidadeInputV2.class, Cidade.class)
+                .addMappings(mapper -> mapper.skip(Cidade::setId));
 //        modelMapper.createTypeMap(Restaurante.class, RestauranteModel.class)
 //                .addMapping(Restaurante::getTaxaFrete, RestauranteModel::setTaxaFrete);
 
