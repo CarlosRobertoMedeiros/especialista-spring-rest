@@ -8,6 +8,10 @@ package com.example.algafoodapi.core.springfox;
 import com.example.algafoodapi.api.exceptionhandler.Problem;
 import com.example.algafoodapi.api.v1.model.*;
 import com.example.algafoodapi.api.v1.openapi.model.*;
+import com.example.algafoodapi.api.v2.model.CidadeModelV2;
+import com.example.algafoodapi.api.v2.model.CozinhaModelV2;
+import com.example.algafoodapi.api.v2.openapi.model.CidadesModelV2OpenApi;
+import com.example.algafoodapi.api.v2.openapi.model.CozinhasModelV2OpenApi;
 import com.fasterxml.classmate.TypeResolver;
 import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;
@@ -52,15 +56,16 @@ import java.util.List;
 public class SpringFoxConfig implements WebMvcConfigurer {
 
     @Bean
-    public Docket apiDocket(){
+    public Docket apiDocketV1(){
         TypeResolver typeResolver = new TypeResolver();
         return new Docket(DocumentationType.SWAGGER_2)
-                    .select()
+                .groupName("V1")
+                .select()
                         .apis(Predicates.and(
                                     RequestHandlerSelectors.basePackage("com.example.algafoodapi.api")
 //                                    RequestHandlerSelectors.basePackage("com.example.algafoodapi.outro")
                                 ))
-                          .paths(PathSelectors.any())
+                          .paths(PathSelectors.ant("/v1/**"))
 //                        .paths(PathSelectors.ant("/restaurantes/*"))
                         .build()
                     .useDefaultResponseMessages(false)
@@ -106,7 +111,7 @@ public class SpringFoxConfig implements WebMvcConfigurer {
                             typeResolver.resolve(CollectionModel.class, UsuarioModel.class),
                             UsuariosModelOpenApi.class))
 
-                    .apiInfo(apiInfo())
+                    .apiInfo(apiInfoV1())
                     .tags(new Tag("Cidades","Gerencia as Cidades"),
                           new Tag("Grupos","Gerencia os Grupos de Usuários"),
                           new Tag("Cozinhas", "Gerencia as cozinhas"),
@@ -118,6 +123,44 @@ public class SpringFoxConfig implements WebMvcConfigurer {
                           new Tag("Usuários", "Gerencia os usuários"),
                           new Tag("Estatísticas", "Estatísticas da AlgaFood"),
                           new Tag("Permissões", "Gerencia as permissões"));
+    }
+
+    @Bean
+    public Docket apiDocketV2(){
+        TypeResolver typeResolver = new TypeResolver();
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("V2")
+                .select()
+                .apis(Predicates.and(
+                        RequestHandlerSelectors.basePackage("com.example.algafoodapi.api")
+//                                    RequestHandlerSelectors.basePackage("com.example.algafoodapi.outro")
+                ))
+                .paths(PathSelectors.ant("/v2/**"))
+//                        .paths(PathSelectors.ant("/restaurantes/*"))
+                .build()
+                .useDefaultResponseMessages(false)
+                .globalResponseMessage(RequestMethod.GET, globalGetResponseMessage())
+                .globalResponseMessage(RequestMethod.POST, globalPostPutResponseMessages())
+                .globalResponseMessage(RequestMethod.PUT, globalPostPutResponseMessages())
+                .globalResponseMessage(RequestMethod.DELETE, globalDeleteResponseMessages())
+                .additionalModels(typeResolver.resolve(Problem.class))
+                .ignoredParameterTypes(ServletWebRequest.class,
+                        URL.class, URI.class, URLStreamHandler.class, Resource.class,
+                        File.class, InputStream.class)
+                .directModelSubstitute(Pageable.class, PageableModelOpenAPI.class)
+                .directModelSubstitute(Links.class, LinksModelOpenApi.class)
+
+                .alternateTypeRules(AlternateTypeRules.newRule(
+                        typeResolver.resolve(PagedModel.class, CozinhaModelV2.class),
+                        CozinhasModelV2OpenApi.class))
+
+                .alternateTypeRules(AlternateTypeRules.newRule(
+                        typeResolver.resolve(CollectionModel.class, CidadeModelV2.class),
+                        CidadesModelV2OpenApi.class))
+
+                .apiInfo(apiInfoV2())
+                .tags(new Tag("Cidades", "Gerencia as cidades"),
+                      new Tag("Cozinhas", "Gerencia as cozinhas"));
     }
 
 
@@ -176,11 +219,20 @@ public class SpringFoxConfig implements WebMvcConfigurer {
         );
     }
 
-    private ApiInfo apiInfo(){
+    private ApiInfo apiInfoV1(){
         return new ApiInfoBuilder()
                 .title("Algafood API")
                 .description("API Aberta para Clientes e Restaurantes")
                 .version("1.0")
+                .contact(new Contact("mrdsolucoesemti","www.mrdsolucoesemti.com.br","carlosmedeiroslima1981@gmail.com"))
+                .build();
+    }
+
+    private ApiInfo apiInfoV2(){
+        return new ApiInfoBuilder()
+                .title("Algafood API")
+                .description("API Aberta para Clientes e Restaurantes")
+                .version("2.0")
                 .contact(new Contact("mrdsolucoesemti","www.mrdsolucoesemti.com.br","carlosmedeiroslima1981@gmail.com"))
                 .build();
     }

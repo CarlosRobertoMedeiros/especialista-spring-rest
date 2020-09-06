@@ -69,3 +69,7 @@ server:
   compression:
     enabled: true
     mime-types: application/json
+
+logging:
+  loggly:
+    token: #seu_customer_Token_aqui

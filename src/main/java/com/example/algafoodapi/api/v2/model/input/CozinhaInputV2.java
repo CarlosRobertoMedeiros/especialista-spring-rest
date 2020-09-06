@@ -5,6 +5,7 @@ package com.example.algafoodapi.api.v2.model.input;
  *  @autor    : roberto
  */
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotBlank;
 
 @Setter
 @Getter
+@ApiModel("CozinhaInput")
 public class CozinhaInputV2 {
 
     @ApiModelProperty(example = "Brasileira", required = true)

@@ -11,6 +11,7 @@ import com.example.algafoodapi.api.v2.assembler.CidadeInputDisassemblerV2;
 import com.example.algafoodapi.api.v2.assembler.CidadeModelAssemblerV2;
 import com.example.algafoodapi.api.v2.model.CidadeModelV2;
 import com.example.algafoodapi.api.v2.model.input.CidadeInputV2;
+import com.example.algafoodapi.api.v2.openapi.controller.CidadeControllerV2OpenApi;
 import com.example.algafoodapi.core.web.AlgaMediaTypes;
 import com.example.algafoodapi.dominio.exception.EstadoNaoEncontradoException;
 import com.example.algafoodapi.dominio.exception.NegocioException;
@@ -28,7 +29,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/v2/cidades", produces = MediaType.APPLICATION_JSON_VALUE)
-public class CidadeControllerV2 {
+public class CidadeControllerV2 implements CidadeControllerV2OpenApi {
 
     @Autowired
     private CidadeRepository cidadeRepository;
