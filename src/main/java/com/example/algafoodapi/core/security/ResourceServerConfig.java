@@ -5,16 +5,10 @@ package com.example.algafoodapi.core.security;
  *  @autor    : roberto
  */
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 
 @Configuration
 @EnableWebSecurity
@@ -29,10 +23,10 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
                 .cors().and()
                 .oauth2ResourceServer().jwt();
     }
-
+    /* Usava assim para uma chave simétrica
     @Bean
     public JwtDecoder jwtDecoder(){
         SecretKey secretKey = new SecretKeySpec("ashnfjashdfu8afhusafniw4we4e5hj4".getBytes(),"HmacSHA256");
         return NimbusJwtDecoder.withSecretKey(secretKey).build();
-    }
+    }*/
 }
