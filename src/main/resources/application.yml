@@ -42,15 +42,10 @@ spring:
   #    max-file-size: 20KB
   #    max-request-size: 20MB
 
-  #Implementando o resource server obrigatorio informar os dados
-  security:
-    oauth2:
-      resourceserver:
-        opaquetoken:
-          introspection-uri: http://auth.algafood.local:8081/oauth/check_token
-          client-id: checktoken
-          client-secret: check123
-
+  #Não consegui testar o logging
+  #logging:
+  #  level:
+  #    org.springframework: DEBUG
 
   #Local de Armazenamento de Fotos local
 algafood:
