@@ -14,6 +14,7 @@ import com.example.algafoodapi.api.v1.model.PedidoResumoModel;
 import com.example.algafoodapi.api.v1.model.input.PedidoInput;
 import com.example.algafoodapi.core.data.PageWrapper;
 import com.example.algafoodapi.core.data.PageableTranslator;
+import com.example.algafoodapi.core.security.AlgaSecurity;
 import com.example.algafoodapi.dominio.exception.EntidadeNaoEncontradaException;
 import com.example.algafoodapi.dominio.exception.NegocioException;
 import com.example.algafoodapi.dominio.filter.PedidoFilter;
@@ -60,6 +61,9 @@ public class PedidoController {
 
     @Autowired
     private PagedResourcesAssembler<Pedido> pagedResourcesAssembler; //Mostra erro no Intelij porém, está certo
+
+    @Autowired
+    private AlgaSecurity algaSecurity;
 
 //    @GetMapping
 //    public MappingJacksonValue listar(@RequestParam(required = false) String campos) {
@@ -113,9 +117,8 @@ public class PedidoController {
         try {
             Pedido novoPedido = pedidoInputDisassembler.toDomainObject(pedidoInput);
 
-            // TODO pegar usuário autenticado
             novoPedido.setCliente(new Usuario());
-            novoPedido.getCliente().setId(1L);
+            novoPedido.getCliente().setId(algaSecurity.getUsuarioId());
 
             novoPedido = emissaoPedidoService.emitir(novoPedido);
 

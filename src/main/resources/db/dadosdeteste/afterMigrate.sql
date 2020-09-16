@@ -80,6 +80,22 @@ insert into tb_produto (nome, descricao, preco, ativo, restaurante_id) values ('
 #Inserindo Permissões
 insert into tb_permissao (nome, descricao) values ('CONSULTAR_COZINHAS', 'Permite consultar cozinhas');
 insert into tb_permissao (nome, descricao) values ('EDITAR_COZINHAS', 'Permite editar cozinhas');
+insert into tb_permissao (nome, descricao) values ('CONSULTAR_FORMAS_PAGAMENTO', 'Permite consultar formas de pagamento');
+insert into tb_permissao (nome, descricao) values ('EDITAR_FORMAS_PAGAMENTO', 'Permite criar ou editar formas de pagamento');
+insert into tb_permissao (nome, descricao) values ('CONSULTAR_CIDADES', 'Permite consultar cidades');
+insert into tb_permissao (nome, descricao) values ('EDITAR_CIDADES', 'Permite criar ou editar cidades');
+insert into tb_permissao (nome, descricao) values ('CONSULTAR_ESTADOS', 'Permite consultar estados');
+insert into tb_permissao (nome, descricao) values ('EDITAR_ESTADOS', 'Permite criar ou editar estados');
+insert into tb_permissao (nome, descricao) values ('CONSULTAR_USUARIOS', 'Permite consultar usuários');
+insert into tb_permissao (nome, descricao) values ('EDITAR_USUARIOS', 'Permite criar ou editar usuários');
+insert into tb_permissao (nome, descricao) values ('CONSULTAR_RESTAURANTES', 'Permite consultar restaurantes');
+insert into tb_permissao (nome, descricao) values ('EDITAR_RESTAURANTES', 'Permite criar, editar ou gerenciar restaurantes');
+insert into tb_permissao (nome, descricao) values ('CONSULTAR_PRODUTOS', 'Permite consultar produtos');
+insert into tb_permissao (nome, descricao) values ('EDITAR_PRODUTOS', 'Permite criar ou editar produtos');
+insert into tb_permissao (nome, descricao) values ('CONSULTAR_PEDIDOS', 'Permite consultar pedidos');
+insert into tb_permissao (nome, descricao) values ('GERENCIAR_PEDIDOS', 'Permite gerenciar pedidos');
+insert into tb_permissao (nome, descricao) values ('GERAR_RELATORIOS', 'Permite gerar relatórios');
+
 
 #Inserindo Dados de Formas de Pagamento para os Restaurantes
 insert into tb_restaurante_forma_pagamento (restaurante_id, forma_pagamento_id) values (1, 1), (1, 2), (1, 3), (2, 3), (3, 2), (3, 3), (4, 1), (4, 2), (5, 1), (5, 2), (6, 3);
@@ -87,21 +103,36 @@ insert into tb_restaurante_forma_pagamento (restaurante_id, forma_pagamento_id) 
 #Inserindo a Tabela de Grupo
 insert into tb_grupo (nome) values ('Gerente'), ('Vendedor'), ('Secretária'), ('Cadastrador');
 
-#Inserindo a Tabela de Usuários
+#Inserindo a Tabela de Usuários senha 123
 insert into tb_usuario (id, nome, email, senha, data_cadastro) values
-(1, 'João da Silva', 'joao.ger@algafood.com', '123', utc_timestamp),
-(2, 'Maria Joaquina', 'maria.vnd@algafood.com', '123', utc_timestamp),
-(3, 'José Souza', 'jose.aux@algafood.com', '123', utc_timestamp),
-(4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '123', utc_timestamp),
-(5, 'Manoel Lima', 'manoel.loja@gmail.com', '123', utc_timestamp),
-(6, 'Débora Mendonça', 'email.teste.aw+debora@gmail.com', '123', utc_timestamp),
-(7, 'Carlos Lima', 'carlosmedeiroslima@gmail.com', '123', utc_timestamp);
+(1, 'João da Silva', 'joao.ger@algafood.com', '$2y$12$YaIAfMDcPlIneLxZnEA5vO9WyFhlJyTv64YNPiQ5VTvDmCAxbWey2', utc_timestamp),
+(2, 'Maria Joaquina', 'maria.vnd@algafood.com', '$2y$12$YaIAfMDcPlIneLxZnEA5vO9WyFhlJyTv64YNPiQ5VTvDmCAxbWey2', utc_timestamp),
+(3, 'José Souza', 'jose.aux@algafood.com', '$2y$12$YaIAfMDcPlIneLxZnEA5vO9WyFhlJyTv64YNPiQ5VTvDmCAxbWey2', utc_timestamp),
+(4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '$2y$12$YaIAfMDcPlIneLxZnEA5vO9WyFhlJyTv64YNPiQ5VTvDmCAxbWey2', utc_timestamp),
+(5, 'Manoel Lima', 'manoel.loja@gmail.com', '$2y$12$YaIAfMDcPlIneLxZnEA5vO9WyFhlJyTv64YNPiQ5VTvDmCAxbWey2', utc_timestamp),
+(6, 'Débora Mendonça', 'email.teste.aw+debora@gmail.com', '$2y$12$YaIAfMDcPlIneLxZnEA5vO9WyFhlJyTv64YNPiQ5VTvDmCAxbWey2', utc_timestamp),
+(7, 'Carlos Lima', 'carlosmedeiroslima@gmail.com', '$2y$12$YaIAfMDcPlIneLxZnEA5vO9WyFhlJyTv64YNPiQ5VTvDmCAxbWey2', utc_timestamp);
 
-#Inserindo os dados na tabela Grupo_Permissoes
-insert into tb_grupo_permissao (grupo_id, permissao_id) values (1, 1), (1, 2), (2, 1), (2, 2), (3, 1);
+#Adiciona todas as permissoes no grupo do gerente
+insert into tb_grupo_permissao (grupo_id, permissao_id)
+select 1, id from tb_permissao;
+
+# Adiciona permissoes no grupo do vendedor
+insert into tb_grupo_permissao (grupo_id, permissao_id)
+select 2, id from tb_permissao where nome like 'CONSULTAR_%';
+
+insert into tb_grupo_permissao (grupo_id, permissao_id) values (2, 14);
+
+# Adiciona permissoes no grupo do auxiliar
+insert into tb_grupo_permissao (grupo_id, permissao_id)
+select 3, id from tb_permissao where nome like 'CONSULTAR_%';
+
+# Adiciona permissoes no grupo cadastrador
+insert into tb_grupo_permissao (grupo_id, permissao_id)
+select 4, id from tb_permissao where nome like '%_RESTAURANTES' or nome like '%_PRODUTOS';
 
 #Inserindo Dados do Grupo de Usuários
-insert into tb_usuario_grupo(usuario_id,grupo_id) values (1,1),(1,2),(2,2);
+insert into tb_usuario_grupo(usuario_id,grupo_id) values (1,1),(1,2),(2,2),(3,3), (4,4);
 
 #Inserindo Dados Para associação entre restaurante e responsável
 insert into tb_restaurante_usuario_responsavel (restaurante_id, usuario_id) values (1, 5), (3, 5);
