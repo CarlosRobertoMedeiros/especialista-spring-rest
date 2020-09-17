@@ -10,12 +10,11 @@ import com.example.algafoodapi.api.v1.assembler.CozinhaModelAssembler;
 import com.example.algafoodapi.api.v1.model.CozinhaModel;
 import com.example.algafoodapi.api.v1.model.input.CozinhaInput;
 import com.example.algafoodapi.api.v1.openapi.controller.CozinhaControllerOpenApi;
+import com.example.algafoodapi.core.security.CheckSecurity;
 import com.example.algafoodapi.dominio.modelo.Cozinha;
 import com.example.algafoodapi.dominio.repository.CozinhaRepository;
 import com.example.algafoodapi.dominio.service.CadastroCozinhaService;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -50,6 +49,7 @@ public class CozinhaController implements CozinhaControllerOpenApi {
     @Autowired
     private PagedResourcesAssembler<Cozinha> pagedResourcesAssembler; //No Intelij mostra com erro, porém, esta funcionando
 
+    @CheckSecurity.Cozinhas.PodeConsultar
     @GetMapping
     public PagedModel<CozinhaModel> listar(@PageableDefault(size = 10) Pageable pageable){
 
@@ -68,7 +68,7 @@ public class CozinhaController implements CozinhaControllerOpenApi {
         return cozinhasPagedModel;
 
     }
-
+    @CheckSecurity.Cozinhas.PodeConsultar
     @GetMapping("/{id}")
     public CozinhaModel buscar(@PathVariable Long id){
 
@@ -76,6 +76,8 @@ public class CozinhaController implements CozinhaControllerOpenApi {
         return cozinhaModelAssembler.toModel(cozinha);
     }
 
+
+    @CheckSecurity.Cozinhas.PodeEditar
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CozinhaModel adicionar(@RequestBody @Valid CozinhaInput cozinhaInput){
@@ -84,6 +86,7 @@ public class CozinhaController implements CozinhaControllerOpenApi {
         return cozinhaModelAssembler.toModel(cozinha);
     }
 
+    @CheckSecurity.Cozinhas.PodeEditar
     @PutMapping("/{id}")
     public CozinhaModel atualizar(@PathVariable Long id,
                                              @RequestBody @Valid CozinhaInput cozinhaInput){
@@ -94,6 +97,7 @@ public class CozinhaController implements CozinhaControllerOpenApi {
         return cozinhaModelAssembler.toModel(cozinhaAtual);
     }
 
+    @CheckSecurity.Cozinhas.PodeEditar
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remover(@PathVariable Long id){
