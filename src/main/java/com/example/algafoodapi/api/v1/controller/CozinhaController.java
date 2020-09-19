@@ -23,6 +23,7 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -52,7 +53,7 @@ public class CozinhaController implements CozinhaControllerOpenApi {
     @CheckSecurity.Cozinhas.PodeConsultar
     @GetMapping
     public PagedModel<CozinhaModel> listar(@PageableDefault(size = 10) Pageable pageable){
-
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
         log.info("Listando cozinhas com paginas de {} registros ",pageable.getPageSize());
 
         //teste para validação

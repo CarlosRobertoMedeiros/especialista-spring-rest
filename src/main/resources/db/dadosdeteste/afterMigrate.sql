@@ -78,20 +78,20 @@ insert into tb_produto (nome, descricao, preco, ativo, restaurante_id) values ('
 insert into tb_produto (nome, descricao, preco, ativo, restaurante_id) values ('Espetinho de Cupim', 'Acompanha farinha, mandioca e vinagrete', 8, 1, 6);
 
 #Inserindo Permissões
-insert into tb_permissao (nome, descricao) values ('CONSULTAR_COZINHAS', 'Permite consultar cozinhas');
+#insert into tb_permissao (nome, descricao) values ('CONSULTAR_COZINHAS', 'Permite consultar cozinhas');
 insert into tb_permissao (nome, descricao) values ('EDITAR_COZINHAS', 'Permite editar cozinhas');
-insert into tb_permissao (nome, descricao) values ('CONSULTAR_FORMAS_PAGAMENTO', 'Permite consultar formas de pagamento');
+#insert into tb_permissao (nome, descricao) values ('CONSULTAR_FORMAS_PAGAMENTO', 'Permite consultar formas de pagamento');
 insert into tb_permissao (nome, descricao) values ('EDITAR_FORMAS_PAGAMENTO', 'Permite criar ou editar formas de pagamento');
-insert into tb_permissao (nome, descricao) values ('CONSULTAR_CIDADES', 'Permite consultar cidades');
+#insert into tb_permissao (nome, descricao) values ('CONSULTAR_CIDADES', 'Permite consultar cidades');
 insert into tb_permissao (nome, descricao) values ('EDITAR_CIDADES', 'Permite criar ou editar cidades');
-insert into tb_permissao (nome, descricao) values ('CONSULTAR_ESTADOS', 'Permite consultar estados');
+#insert into tb_permissao (nome, descricao) values ('CONSULTAR_ESTADOS', 'Permite consultar estados');
 insert into tb_permissao (nome, descricao) values ('EDITAR_ESTADOS', 'Permite criar ou editar estados');
 insert into tb_permissao (nome, descricao) values ('CONSULTAR_USUARIOS', 'Permite consultar usuários');
 insert into tb_permissao (nome, descricao) values ('EDITAR_USUARIOS', 'Permite criar ou editar usuários');
-insert into tb_permissao (nome, descricao) values ('CONSULTAR_RESTAURANTES', 'Permite consultar restaurantes');
+#insert into tb_permissao (nome, descricao) values ('CONSULTAR_RESTAURANTES', 'Permite consultar restaurantes');
 insert into tb_permissao (nome, descricao) values ('EDITAR_RESTAURANTES', 'Permite criar, editar ou gerenciar restaurantes');
-insert into tb_permissao (nome, descricao) values ('CONSULTAR_PRODUTOS', 'Permite consultar produtos');
-insert into tb_permissao (nome, descricao) values ('EDITAR_PRODUTOS', 'Permite criar ou editar produtos');
+#insert into tb_permissao (nome, descricao) values ('CONSULTAR_PRODUTOS', 'Permite consultar produtos');
+#insert into tb_permissao (nome, descricao) values ('EDITAR_PRODUTOS', 'Permite criar ou editar produtos');
 insert into tb_permissao (nome, descricao) values ('CONSULTAR_PEDIDOS', 'Permite consultar pedidos');
 insert into tb_permissao (nome, descricao) values ('GERENCIAR_PEDIDOS', 'Permite gerenciar pedidos');
 insert into tb_permissao (nome, descricao) values ('GERAR_RELATORIOS', 'Permite gerar relatórios');
@@ -121,7 +121,7 @@ select 1, id from tb_permissao;
 insert into tb_grupo_permissao (grupo_id, permissao_id)
 select 2, id from tb_permissao where nome like 'CONSULTAR_%';
 
-insert into tb_grupo_permissao (grupo_id, permissao_id) values (2, 14);
+#insert into tb_grupo_permissao (grupo_id, permissao_id) values (2, 14);
 
 # Adiciona permissoes no grupo do auxiliar
 insert into tb_grupo_permissao (grupo_id, permissao_id)
