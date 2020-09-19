@@ -10,6 +10,7 @@ import com.example.algafoodapi.api.v1.AlgaLinks;
 import com.example.algafoodapi.api.v1.assembler.GrupoModelAssembler;
 import com.example.algafoodapi.api.v1.model.GrupoModel;
 import com.example.algafoodapi.api.v1.openapi.controller.UsuarioGrupoControllerOpenApi;
+import com.example.algafoodapi.core.security.CheckSecurity;
 import com.example.algafoodapi.dominio.modelo.Usuario;
 import com.example.algafoodapi.dominio.service.CadastroUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class UsuarioGrupoController implements UsuarioGrupoControllerOpenApi {
     @Autowired
     private AlgaLinks algaLinks;
 
+    @CheckSecurity.UsuariosGruposPermissoes.PodeConsultar
     @GetMapping
     public CollectionModel<GrupoModel> listar(@PathVariable Long usuarioId){
 
@@ -49,6 +51,7 @@ public class UsuarioGrupoController implements UsuarioGrupoControllerOpenApi {
         return gruposModel;
     }
 
+    @CheckSecurity.UsuariosGruposPermissoes.PodeEditar
     @DeleteMapping("/{grupoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> desassociar(@PathVariable Long usuarioId, @PathVariable Long grupoId){
@@ -56,6 +59,7 @@ public class UsuarioGrupoController implements UsuarioGrupoControllerOpenApi {
         return ResponseEntity.noContent().build();
     }
 
+    @CheckSecurity.UsuariosGruposPermissoes.PodeEditar
     @PutMapping("/{grupoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> associar(@PathVariable Long usuarioId, @PathVariable Long grupoId){

@@ -7,6 +7,7 @@ package com.example.algafoodapi.api.v1.controller;
 
 import com.example.algafoodapi.api.v1.AlgaLinks;
 import com.example.algafoodapi.api.v1.openapi.controller.EstatisticasControllerOpenApi;
+import com.example.algafoodapi.core.security.CheckSecurity;
 import com.example.algafoodapi.dominio.filter.VendaDiariaFilter;
 import com.example.algafoodapi.dominio.modelo.dto.VendaDiaria;
 import com.example.algafoodapi.dominio.service.VendaQueryService;
@@ -37,12 +38,14 @@ public class EstatisticasController implements EstatisticasControllerOpenApi {
     @Autowired
     private AlgaLinks algaLinks;
 
+    @CheckSecurity.Estatisticas.PodeConsultar
     @GetMapping(value="/vendas-diarias", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<VendaDiaria> consultarVendasDiarias(VendaDiariaFilter filtro,
                                                     @RequestParam(required = false, defaultValue = "+00:00") String timeOffSet){
         return vendaQueryService.consultarVendasDiarias(filtro,timeOffSet) ;
     }
 
+    @CheckSecurity.Estatisticas.PodeConsultar
     @GetMapping(value= "/vendas-diarias", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<byte[]> consultarVendasDiariasPDF(VendaDiariaFilter filtro,
                                                                  @RequestParam(required = false, defaultValue = "+00:00") String timeOffSet) throws JRException {
@@ -58,6 +61,7 @@ public class EstatisticasController implements EstatisticasControllerOpenApi {
                 .body(bytesPdf);
     }
 
+    @CheckSecurity.Estatisticas.PodeConsultar
     @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public EstatisticasModel estatisticas() {

@@ -15,6 +15,7 @@ import com.example.algafoodapi.api.v1.model.input.PedidoInput;
 import com.example.algafoodapi.core.data.PageWrapper;
 import com.example.algafoodapi.core.data.PageableTranslator;
 import com.example.algafoodapi.core.security.AlgaSecurity;
+import com.example.algafoodapi.core.security.CheckSecurity;
 import com.example.algafoodapi.dominio.exception.EntidadeNaoEncontradaException;
 import com.example.algafoodapi.dominio.exception.NegocioException;
 import com.example.algafoodapi.dominio.filter.PedidoFilter;
@@ -87,6 +88,7 @@ public class PedidoController {
                               name = "campos", paramType = "query", type = "string")
     })
 
+    @CheckSecurity.Pedidos.PodePesquisar
     @GetMapping
     public PagedModel<PedidoResumoModel> pesquisar(PedidoFilter filtro,
                                                    @PageableDefault(size = 10) Pageable pageable) {
@@ -104,6 +106,7 @@ public class PedidoController {
             @ApiImplicitParam(value = "Nomes das propriedades para filtrar na resposta, separados por virgula ",
                     name = "campos", paramType = "query", type = "string")
     })
+    @CheckSecurity.Pedidos.PodeBuscar
     @GetMapping("/{codigoPedido}")
     public PedidoModel buscar(@PathVariable String codigoPedido) {
         Pedido pedido = emissaoPedidoService.buscarOuFalhar(codigoPedido);
@@ -111,6 +114,7 @@ public class PedidoController {
         return pedidoModelAssembler.toModel(pedido);
     }
 
+    @CheckSecurity.Pedidos.PodeCriar
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PedidoModel adicionar(@Valid @RequestBody PedidoInput pedidoInput) {
