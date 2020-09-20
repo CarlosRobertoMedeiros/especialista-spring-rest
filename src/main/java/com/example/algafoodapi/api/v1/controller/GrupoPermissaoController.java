@@ -9,6 +9,7 @@ import com.example.algafoodapi.api.v1.AlgaLinks;
 import com.example.algafoodapi.api.v1.assembler.PermissaoModelAssembler;
 import com.example.algafoodapi.api.v1.model.PermissaoModel;
 import com.example.algafoodapi.api.v1.openapi.controller.GrupoPermissaoControllerOpenApi;
+import com.example.algafoodapi.core.security.AlgaSecurity;
 import com.example.algafoodapi.core.security.CheckSecurity;
 import com.example.algafoodapi.dominio.modelo.Grupo;
 import com.example.algafoodapi.dominio.service.CadastroGrupoService;
@@ -33,6 +34,9 @@ public class GrupoPermissaoController implements GrupoPermissaoControllerOpenApi
     @Autowired
     private AlgaLinks algaLinks;
 
+    @Autowired
+    private AlgaSecurity algaSecurity;
+
     @CheckSecurity.UsuariosGruposPermissoes.PodeConsultar
     @Override
     @GetMapping
@@ -41,14 +45,18 @@ public class GrupoPermissaoController implements GrupoPermissaoControllerOpenApi
 
         CollectionModel<PermissaoModel> permissoesModel
                 = permissaoModelAssembler.toCollectionModel(grupo.getPermissoes())
-                .removeLinks()
-                .add(algaLinks.linkToGrupoPermissoes(grupoId))
-                .add(algaLinks.linkToGrupoPermissaoAssociacao(grupoId, "associar"));
+                .removeLinks();
 
-        permissoesModel.getContent().forEach(permissaoModel -> {
-            permissaoModel.add(algaLinks.linkToGrupoPermissaoDesassociacao(
-                    grupoId, permissaoModel.getId(), "desassociar"));
-        });
+        permissoesModel.add(algaLinks.linkToGrupoPermissoes(grupoId));
+
+        if (algaSecurity.podeEditarUsuariosGruposPermissoes()) {
+            permissoesModel.add(algaLinks.linkToGrupoPermissaoAssociacao(grupoId, "associar"));
+
+            permissoesModel.getContent().forEach(permissaoModel -> {
+                permissaoModel.add(algaLinks.linkToGrupoPermissaoDesassociacao(
+                        grupoId, permissaoModel.getId(), "desassociar"));
+            });
+        }
 
         return permissoesModel;
     }

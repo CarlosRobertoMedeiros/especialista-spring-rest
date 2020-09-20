@@ -8,6 +8,7 @@ package com.example.algafoodapi.api.v1.assembler;
 import com.example.algafoodapi.api.v1.AlgaLinks;
 import com.example.algafoodapi.api.v1.controller.RestauranteProdutoFotoController;
 import com.example.algafoodapi.api.v1.model.FotoProdutoModel;
+import com.example.algafoodapi.core.security.AlgaSecurity;
 import com.example.algafoodapi.dominio.modelo.FotoProduto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class FotoProdutoModelAssembler
     @Autowired
     private AlgaLinks algaLinks;
 
+    @Autowired
+    private AlgaSecurity algaSecurity;
+
     public FotoProdutoModelAssembler() {
         super(RestauranteProdutoFotoController.class, FotoProdutoModel.class);
     }
@@ -32,11 +36,14 @@ public class FotoProdutoModelAssembler
 
         FotoProdutoModel fotoProdutoModel = modelMapper.map(foto, FotoProdutoModel.class);
 
-        fotoProdutoModel.add(algaLinks.linkToFotoProduto(
-                foto.getRestauranteId(), foto.getProduto().getId()));
+        // Quem pode consultar restaurantes, também pode consultar os produtos e fotos
+        if (algaSecurity.podeConsultarRestaurantes()) {
+            fotoProdutoModel.add(algaLinks.linkToFotoProduto(
+                    foto.getRestauranteId(), foto.getProduto().getId()));
 
-        fotoProdutoModel.add(algaLinks.linkToProduto(
-                foto.getRestauranteId(), foto.getProduto().getId(), "produto"));
+            fotoProdutoModel.add(algaLinks.linkToProduto(
+                    foto.getRestauranteId(), foto.getProduto().getId(), "produto"));
+        }
 
         return fotoProdutoModel;
     }

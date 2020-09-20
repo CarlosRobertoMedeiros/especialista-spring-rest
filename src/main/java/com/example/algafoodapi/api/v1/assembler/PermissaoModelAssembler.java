@@ -7,6 +7,7 @@ package com.example.algafoodapi.api.v1.assembler;
 
 import com.example.algafoodapi.api.v1.AlgaLinks;
 import com.example.algafoodapi.api.v1.model.PermissaoModel;
+import com.example.algafoodapi.core.security.AlgaSecurity;
 import com.example.algafoodapi.dominio.modelo.Permissao;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class PermissaoModelAssembler
 
     @Autowired
     private AlgaLinks algaLinks;
+
+    @Autowired
+    private AlgaSecurity algaSecurity;
 
     @Override
     public PermissaoModel toModel(Permissao permissao) {

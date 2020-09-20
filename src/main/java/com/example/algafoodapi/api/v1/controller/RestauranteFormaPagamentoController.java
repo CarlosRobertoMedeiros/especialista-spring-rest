@@ -9,6 +9,7 @@ import com.example.algafoodapi.api.v1.AlgaLinks;
 import com.example.algafoodapi.api.v1.assembler.FormaPagamentoModelAssembler;
 import com.example.algafoodapi.api.v1.model.FormaPagamentoModel;
 import com.example.algafoodapi.api.v1.openapi.controller.RestauranteFormaPagamentoControllerOpenApi;
+import com.example.algafoodapi.core.security.AlgaSecurity;
 import com.example.algafoodapi.core.security.CheckSecurity;
 import com.example.algafoodapi.dominio.modelo.Restaurante;
 import com.example.algafoodapi.dominio.service.CadastroRestauranteService;
@@ -32,6 +33,9 @@ public class RestauranteFormaPagamentoController implements RestauranteFormaPaga
     @Autowired
     private AlgaLinks algaLinks;
 
+    @Autowired
+    private AlgaSecurity algaSecurity;
+
 
     @CheckSecurity.Restaurantes.PodeConsultar
     @GetMapping
@@ -39,17 +43,24 @@ public class RestauranteFormaPagamentoController implements RestauranteFormaPaga
 
         Restaurante restaurante = restauranteService.buscarOuFalhar(restauranteId);
 
-        CollectionModel<FormaPagamentoModel> formasPagamentoModel = formaPagamentoModelAssembler.toCollectionModel(restaurante.getFormasdePagamento())
-                .removeLinks()
-                .add(algaLinks.linkToRestauranteFormasPagamento(restauranteId))
-                .add(algaLinks.linkToRestauranteFormaPagamentoAssociacao(restauranteId,"associar"));
+        CollectionModel<FormaPagamentoModel> formasPagamentoModel
+                = formaPagamentoModelAssembler.toCollectionModel(restaurante.getFormasdePagamento())
+                .removeLinks();
 
-        formasPagamentoModel.getContent().forEach(formaPagamentoModel -> {
-            formaPagamentoModel.add(algaLinks.linkToFormaPagamentoDesassociacao(
-                    restauranteId,formaPagamentoModel.getId(),"desassociar"));
-        });
+        formasPagamentoModel.add(algaLinks.linkToRestauranteFormasPagamento(restauranteId));
+
+        if (algaSecurity.podeGerenciarFuncionamentoRestaurantes(restauranteId)) {
+            formasPagamentoModel.add(algaLinks.linkToRestauranteFormaPagamentoAssociacao(restauranteId, "associar"));
+
+            formasPagamentoModel.getContent().forEach(formaPagamentoModel -> {
+                formaPagamentoModel.add(algaLinks.linkToRestauranteFormaPagamentoDesassociacao(
+                        restauranteId, formaPagamentoModel.getId(), "desassociar"));
+            });
+        }
 
         return formasPagamentoModel;
+
+
     }
 
     @CheckSecurity.Restaurantes.PodeGerenciarFuncionamento
