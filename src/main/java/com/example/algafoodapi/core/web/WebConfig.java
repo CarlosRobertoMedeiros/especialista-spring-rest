@@ -21,14 +21,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Autowired
     private ApiDeprecationHandler apiDeprecationHandler;
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedMethods("*");
-//			.allowedOrigins("*")
-//			.maxAge(30);
-    }
-
     //Aqui é Para Depreciar uma versão da API
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

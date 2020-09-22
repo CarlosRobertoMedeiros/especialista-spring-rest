@@ -54,8 +54,17 @@ spring:
         jwt:
           public-key-location: classpath:keys/algafood-pubkey.pem
 
+
+
+
   #Local de Armazenamento de Fotos local
 algafood:
+  jwt:
+    keystore:
+      jksLocation: classpath:keys/algafood.jks
+      password: 123456
+      keypair-alias: algafood
+
   storage:
     tipo: local
     local:

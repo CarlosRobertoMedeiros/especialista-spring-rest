@@ -28,17 +28,12 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.builders.ResponseMessageBuilder;
+import springfox.documentation.builders.*;
 import springfox.documentation.schema.AlternateTypeRules;
 import springfox.documentation.schema.ModelRef;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.service.ResponseMessage;
-import springfox.documentation.service.Tag;
+import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -111,6 +106,8 @@ public class SpringFoxConfig implements WebMvcConfigurer {
                             typeResolver.resolve(CollectionModel.class, UsuarioModel.class),
                             UsuariosModelOpenApi.class))
 
+                    .securitySchemes(Arrays.asList(securityScheme()))
+                    .securityContexts(Arrays.asList(securityContext()))
                     .apiInfo(apiInfoV1())
                     .tags(new Tag("Cidades","Gerencia as Cidades"),
                           new Tag("Grupos","Gerencia os Grupos de Usuários"),
@@ -123,6 +120,35 @@ public class SpringFoxConfig implements WebMvcConfigurer {
                           new Tag("Usuários", "Gerencia os usuários"),
                           new Tag("Estatísticas", "Estatísticas da AlgaFood"),
                           new Tag("Permissões", "Gerencia as permissões"));
+    }
+
+    private SecurityScheme securityScheme(){
+        return new OAuthBuilder()
+                .name("Algafood")
+                .grantTypes(grantTypes())
+                .scopes(scopes())
+                .build();
+    }
+
+    private SecurityContext securityContext(){
+        SecurityReference securityReferenceBuilder = SecurityReference.builder()
+                .reference("Algafood")
+                .scopes(scopes().toArray(new AuthorizationScope[0]))
+                .build();
+
+        return SecurityContext.builder()
+                .securityReferences(Arrays.asList(securityReferenceBuilder))
+                .forPaths(PathSelectors.any())
+                .build();
+    }
+
+    private List<AuthorizationScope> scopes(){
+        return Arrays.asList(new AuthorizationScope("READ","Acesso de Leitura"),
+                             new AuthorizationScope("WRITE","Acesso de Escrita"));
+    }
+
+    private List<GrantType> grantTypes(){
+        return Arrays.asList(new ResourceOwnerPasswordCredentialsGrant("/oauth/token"));
     }
 
     @Bean
